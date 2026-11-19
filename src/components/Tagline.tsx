@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { taglineSection as copy } from "@/lib/content";
 
+/** Homepage-only intro under the hero. Its links scroll within the homepage. */
 export default function Tagline() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const waveRef = useRef<HTMLDivElement>(null);
@@ -44,28 +46,26 @@ export default function Tagline() {
       </div>
       <div className="relative mx-auto w-full max-w-[1400px]">
         <h1 className="max-w-[1050px] text-[clamp(2.8rem,6.5vw,6.5rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
-          <span className="block">Turn the Tide.</span>
+          <span className="block">{copy.line1}</span>
           <span className="block text-coral-soft">
-            Move the Business<span className="ripple-dot">.</span>
+            {copy.line2}
+            <span className="ripple-dot">.</span>
           </span>
         </h1>
-        <p className="mt-7 max-w-2xl text-base leading-7 text-white/55">
-          We turn business challenges and digital shifts into momentum, using creativity and technology to
-          move brands forward.
-        </p>
+        <p className="mt-7 max-w-2xl text-base leading-7 text-white/55">{copy.intro}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a href="#contact" className="btn-accent">
-            Start a Project
+            {copy.primaryCta}
           </a>
           <a href="#services" className="btn-outline">
-            See What We Do
+            {copy.secondaryCta}
           </a>
         </div>
         <a
           href="#about"
           className="mt-10 inline-flex gap-3 text-[9px] font-bold uppercase tracking-[0.24em] text-white/45"
         >
-          Scroll to ride the wave <span className="animate-bounce">↓</span>
+          {copy.scrollCue} <span className="animate-bounce">↓</span>
         </a>
       </div>
       <div

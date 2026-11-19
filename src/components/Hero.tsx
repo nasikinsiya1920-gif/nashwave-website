@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-const cursorWords = ["Brand", "Strategy", "Apps", "Digital", "Solutions", "Growth", "Brand", "Strategy"];
+import { heroSection } from "@/lib/content";
 
 export default function Hero() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -34,11 +34,11 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(3,17,27,.96)_8%,rgba(5,42,52,.72)_56%,rgba(32,0,42,.6))]" />
       <div className="digital-grid absolute inset-0 opacity-25" />
       <p className="absolute left-5 top-28 text-[10px] font-bold uppercase tracking-[0.28em] text-white/50 md:left-10 lg:left-16">
-        Media · Marketing · Digital Solutions
+        {heroSection.eyebrow}
       </p>
       <div ref={cursorRef} className={`hero-cursor ${cursorVisible ? "is-visible" : ""}`} aria-hidden="true">
         <div>
-          {cursorWords.map((word, i) => (
+          {heroSection.cursorWords.map((word, i) => (
             <span key={i}>{word}</span>
           ))}
         </div>

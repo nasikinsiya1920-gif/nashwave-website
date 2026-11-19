@@ -77,12 +77,72 @@
   text-transform: uppercase;
   transition: color 0.2s;
 }
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.is-active {
   color: white;
+}
+.nav-link {
+  position: relative;
+}
+.nav-link.is-active::after {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 5px;
+  height: 5px;
+  content: "";
+  border-radius: 50%;
+  background: var(--color-coral);
+  transform: translateX(-50%);
+}
+
+/* ---------- Breadcrumbs (service pages) ---------- */
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.breadcrumbs li:not(:last-child)::after {
+  margin-left: 10px;
+  content: "/";
+  color: rgba(255, 255, 255, 0.25);
+}
+.breadcrumbs a:hover {
+  color: white;
+}
+.breadcrumbs [aria-current="page"] {
+  color: var(--color-coral-soft);
+}
+
+/* ---------- Legal pages ---------- */
+.legal-prose h2 {
+  margin: 56px 0 16px;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+.legal-prose p {
+  margin-top: 14px;
+  color: rgba(21, 19, 26, 0.68);
+  font-size: 16px;
+  line-height: 28px;
+}
+/* Buttons are inline-flex by default, but Tailwind display utilities on the same element
+   (e.g. "hidden sm:inline-flex" in the header) must still win, so `display` lives in a layer. */
+@layer components {
+  .btn-accent,
+  .btn-outline {
+    display: inline-flex;
+  }
 }
 .btn-accent,
 .btn-outline {
-  display: inline-flex;
+  white-space: nowrap;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
@@ -145,19 +205,6 @@
   width: 100%;
   height: auto;
   overflow: visible;
-}
-.animated-hero-logo text {
-  fill: white;
-  font-family: var(--font-display);
-  font-weight: 800;
-}
-.frame22-nash {
-  font-size: 264.22px;
-  letter-spacing: -23.7798px;
-}
-.frame22-ave {
-  font-size: 242.202px;
-  letter-spacing: -21.7982px;
 }
 .morph-logo {
   position: fixed;
@@ -470,53 +517,207 @@
   transform: translate(-32px, -32px) rotate(-90deg);
 }
 
-/* ---------- Approach ---------- */
-.approach-line {
+/* ---------- Approach: "Process" board ---------- */
+/* Mobile / tablet / touch first: a stacked list with one vertical line through the badges.
+   The scattered flow-chart layout is switched on below for wide screens with a mouse. */
+.process-micro {
+  color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.process-title {
+  margin-left: -0.05em;
+  font-size: clamp(5rem, 16vw, 15rem);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.065em;
+}
+.process-board {
   position: relative;
+  margin-top: 64px;
 }
-.approach-node {
+.process-lines {
+  display: none;
+}
+.process-line {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-ink) 40%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition:
+    stroke 0.3s,
+    stroke-dashoffset 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.process-line.is-active {
+  stroke: var(--color-coral);
+}
+.process-steps {
   position: relative;
-  z-index: 1;
-  transition: 0.3s;
+  display: grid;
+  gap: 28px;
+  padding-left: 44px;
+  list-style: none;
 }
-.approach-line article:hover .approach-node {
-  color: white;
-  background: var(--color-plum);
-  transform: scale(1.12);
-}
-.approach-arrow {
+.process-steps::before {
   position: absolute;
-  top: 8px;
-  right: 18px;
+  top: 12px;
+  bottom: 12px;
+  left: 15px;
+  width: 1px;
+  content: "";
+  background: color-mix(in srgb, var(--color-ink) 40%, transparent);
+}
+.process-card {
+  --tilt: -2deg;
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 35%, transparent);
+  border-radius: 22px;
+  padding: 18px 22px 22px;
+  background: rgba(255, 255, 255, 0.6);
+  outline: none;
+  transform: rotate(var(--tilt));
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s,
+    border-color 0.3s,
+    background 0.3s,
+    box-shadow 0.3s;
+}
+.process-card:nth-child(even) {
+  --tilt: 2deg;
+}
+.process-badge {
+  position: absolute;
+  top: 18px;
+  left: -44px;
   display: flex;
-  width: 42px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(111, 0, 114, 0.2);
-  border-radius: 999px;
-  color: var(--color-coral);
-  background: white;
-  font-size: 20px;
+  border-radius: 50%;
+  color: var(--color-plum);
+  /* Opaque so the connector line passes behind it. */
+  background: color-mix(in srgb, var(--color-plum) 15%, var(--color-sand));
+  font-size: 11px;
+  font-weight: 700;
   transition:
     color 0.3s,
-    background 0.3s,
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    background 0.3s;
 }
-.approach-line article:hover .approach-arrow {
-  color: white;
+.process-eyebrow {
+  display: block;
+  color: color-mix(in srgb, var(--color-ink) 60%, transparent);
+  font-size: 11px;
+}
+.process-step-title {
+  margin-top: 10px;
+  font-size: clamp(1.5rem, 2.6vw, 2.6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+/* Description: always open in the stacked layout; collapses to 0 rows on desktop until active. */
+.process-desc {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.process-desc > div {
+  min-height: 0;
+  overflow: hidden;
+}
+.process-desc p {
+  padding-top: 12px;
+  color: color-mix(in srgb, var(--color-ink) 58%, transparent);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.process-card.is-active,
+.process-card:focus-visible {
+  z-index: 5;
+  border-color: var(--color-plum);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 50px color-mix(in srgb, var(--color-plum) 14%, transparent);
+  transform: translateY(-6px) rotate(0deg);
+}
+.process-card.is-active .process-badge,
+.process-card:focus-visible .process-badge {
+  color: var(--color-ink);
   background: var(--color-coral);
-  transform: translateX(8px);
 }
-@media (max-width: 1023px) {
-  .approach-arrow {
-    top: auto;
-    right: 8px;
-    bottom: -16px;
-    transform: rotate(90deg);
+
+@media (min-width: 1024px) and (hover: hover) {
+  .process-board {
+    aspect-ratio: 16 / 9;
+    margin-top: 80px;
   }
-  .approach-line article:hover .approach-arrow {
-    transform: translateY(6px) rotate(90deg);
+  .process-lines {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .process-steps {
+    position: absolute;
+    inset: 0;
+    display: block;
+    padding: 0;
+  }
+  .process-steps::before {
+    content: none;
+  }
+  .process-card,
+  .process-card:nth-child(even) {
+    --tilt: var(--r);
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    width: 30%;
+    padding: 26px 30px 32px;
+    border-radius: 26px;
+  }
+  .process-step-title {
+    margin-top: 14px;
+  }
+  .process-badge {
+    top: -14px;
+    right: -14px;
+    left: auto;
+  }
+  .process-desc {
+    grid-template-rows: 0fr;
+  }
+  .process-card.is-active .process-desc,
+  .process-card:focus-visible .process-desc {
+    grid-template-rows: 1fr;
+  }
+  .process-board.has-active .process-card:not(.is-active) {
+    opacity: 0.5;
+  }
+}
+
+/* Scroll-in: cards drop in one after another, then each line draws itself.
+   Only when JS can reveal them again, and never with reduced motion. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .process-board:not(.is-visible) .process-card {
+    opacity: 0;
+    transform: translateY(-48px) rotate(0deg);
+  }
+  .process-board:not(.is-visible) .process-line {
+    stroke-dashoffset: 1;
+  }
+  .process-board.is-entering .process-card {
+    transition-delay: calc(var(--i) * 160ms);
+  }
+  .process-board.is-entering .process-line {
+    transition-delay: 0s, var(--d);
   }
 }
 
@@ -577,6 +778,47 @@
 }
 .field textarea {
   resize: vertical;
+}
+.field select:disabled {
+  opacity: 0.45;
+}
+.service-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 124, 114, 0.55);
+  border-radius: 999px;
+  padding: 7px 7px 7px 16px;
+  color: white;
+  background: rgba(255, 78, 82, 0.12);
+  font-size: 12px;
+  font-weight: 600;
+  animation: chip-in 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.service-chip button {
+  display: flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 15px;
+  line-height: 1;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.service-chip button:hover {
+  color: var(--color-ink);
+  background: var(--color-coral);
+}
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
 }
 
 /* ---------- Footer ---------- */

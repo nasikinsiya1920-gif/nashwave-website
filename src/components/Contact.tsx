@@ -2,16 +2,33 @@
 
 import Image from "next/image";
 import { FormEvent, useState } from "react";
-import { budgetRanges, services, site } from "@/lib/content";
-import { Label } from "./ui";
+import { contactSection as copy, getService, services, site } from "@/lib/content";
+import { Label, PAGE_TOP, SocialLinks, Title } from "./ui";
 
 /**
  * Contact form powered by Netlify Forms.
  * Netlify detects the form from /public/__forms.html at build time;
  * submissions appear in Netlify → your site → Forms.
+ * Keep the field names (name, email, company, service, message) in sync with that file.
+ * Several services can be chosen; they are sent as one comma-separated `service` field.
+ *
+ * `serviceSlugs` pre-selects services (used by /contact?service=<slug> or ?service=<slug>,<slug>).
  */
-export default function Contact() {
+export default function Contact({
+  asPage = false,
+  serviceSlugs = [],
+}: {
+  asPage?: boolean;
+  serviceSlugs?: string[];
+}) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [selected, setSelected] = useState<string[]>(() =>
+    serviceSlugs.map((slug) => getService(slug)?.title).filter((t): t is string => Boolean(t)),
+  );
+  const options = [...services.map((s) => s.title), copy.fields.serviceUnsure];
+  const available = options.filter((o) => !selected.includes(o));
+  const add = (title: string) => title && setSelected((cur) => (cur.includes(title) ? cur : [...cur, title]));
+  const remove = (title: string) => setSelected((cur) => cur.filter((t) => t !== title));
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,78 +48,102 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="bg-ink px-5 py-24 text-white md:px-10 lg:px-16 lg:py-36">
+    <section
+      id="contact"
+      className={`scroll-mt-20 bg-ink px-5 py-24 text-white md:px-10 lg:px-16 lg:py-36 ${asPage ? PAGE_TOP : ""}`}
+    >
       <div className="mx-auto max-w-[1400px]">
-        <Label light>Let&apos;s Talk</Label>
+        <Label light>{copy.label}</Label>
         <div className="grid gap-16 lg:grid-cols-[1.3fr_.7fr]">
           <div>
-            <h2 className="display-title">
-              Start a project
+            <Title asPage={asPage}>
+              {copy.titleLine1}
               <br />
-              with us.
-            </h2>
-            <p className="mt-8 max-w-xl text-base leading-7 text-white/55">
-              Tell us what you are facing and where you want to go. We will reply within one working day.
-            </p>
+              {copy.titleLine2}
+            </Title>
+            <p className="mt-8 max-w-xl text-base leading-7 text-white/55">{copy.intro}</p>
             {status === "sent" ? (
               <div role="status" className="mt-14 border border-coral/40 bg-coral/10 p-8">
                 <span className="text-[10px] font-bold uppercase tracking-[.2em] text-coral-soft">
-                  Brief received
+                  {copy.sentTag}
                 </span>
-                <p className="mt-4 text-2xl font-semibold">Thanks. Your message has landed.</p>
-                <p className="mt-2 text-sm text-white/55">We will be in touch within one working day.</p>
+                <p className="mt-4 text-2xl font-semibold">{copy.sentTitle}</p>
+                <p className="mt-2 text-sm text-white/55">{copy.sentCopy}</p>
               </div>
             ) : (
               <form name="contact" onSubmit={submit} className="mt-14 grid gap-x-5 gap-y-8 md:grid-cols-2">
                 <input type="hidden" name="form-name" value="contact" />
                 <p hidden>
                   <label>
-                    Don&apos;t fill this out: <input name="bot-field" />
+                    {copy.honeypot} <input name="bot-field" />
                   </label>
                 </p>
                 <label className="field">
-                  <span>Name</span>
+                  <span>{copy.fields.name}</span>
                   <input name="name" required autoComplete="name" />
                 </label>
                 <label className="field">
-                  <span>Work email</span>
+                  <span>{copy.fields.email}</span>
                   <input name="email" required type="email" autoComplete="email" />
                 </label>
                 <label className="field">
-                  <span>Company</span>
+                  <span>{copy.fields.company}</span>
                   <input name="company" required autoComplete="organization" />
                 </label>
-                <label className="field">
-                  <span>What do you need?</span>
-                  <select name="service" required defaultValue="">
+                <div className="field">
+                  <label htmlFor="service-picker">
+                    <span>{copy.fields.service}</span>
+                  </label>
+                  {/* The picker has no name: the chosen services are submitted via the hidden input.
+                      It is `required` only while nothing is chosen, so the browser blocks an empty submit. */}
+                  <select
+                    id="service-picker"
+                    value=""
+                    required={selected.length === 0}
+                    disabled={available.length === 0}
+                    onChange={(e) => add(e.target.value)}
+                  >
                     <option value="" disabled>
-                      Select a service
+                      {selected.length ? copy.fields.serviceAddAnother : copy.fields.servicePlaceholder}
                     </option>
-                    {services.map((s) => (
-                      <option key={s.title}>{s.title}</option>
+                    {available.map((title) => (
+                      <option key={title} value={title}>
+                        {title}
+                      </option>
                     ))}
-                    <option>Not sure yet</option>
                   </select>
-                </label>
+                  <input type="hidden" name="service" value={selected.join(", ")} />
+                </div>
+                {selected.length > 0 && (
+                  <ul aria-label={copy.fields.serviceSelectedLabel} className="flex flex-wrap gap-2 md:col-span-2">
+                    {selected.map((title) => (
+                      <li key={title} className="service-chip">
+                        {title}
+                        <button
+                          type="button"
+                          onClick={() => remove(title)}
+                          aria-label={`${copy.fields.serviceRemove} ${title}`}
+                        >
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <label className="field md:col-span-2">
-                  <span>Tell us about your project</span>
+                  <span>{copy.fields.message}</span>
                   <textarea name="message" required rows={4} />
                 </label>
-                <label className="field">
-                  <span>Budget range (optional)</span>
-                  <select name="budget" defaultValue="">
-                    <option value="">Select a range</option>
-                    {budgetRanges.map((b) => (
-                      <option key={b}>{b}</option>
-                    ))}
-                  </select>
-                </label>
-                <button type="submit" disabled={status === "sending"} className="btn-accent self-end">
-                  {status === "sending" ? "Sending…" : "Send my brief"}
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="btn-accent justify-self-start md:col-span-2"
+                >
+                  {status === "sending" ? copy.sending : copy.submit}
                 </button>
                 {status === "error" && (
                   <p role="alert" className="text-sm text-coral-soft md:col-span-2">
-                    Something went wrong. Please try again or email us at {site.email}.
+                    {copy.error} {site.email}.
                   </p>
                 )}
               </form>
@@ -110,21 +151,25 @@ export default function Contact() {
           </div>
           <aside className="border-t border-white/15 pt-8 lg:border-l lg:border-t-0 lg:pl-12">
             <span className="text-[10px] font-bold uppercase tracking-[.2em] text-white/40">
-              Get in touch
+              {copy.asideTitle}
             </span>
             <a href={`mailto:${site.email}`} className="mt-9 block text-2xl font-semibold text-coral-soft">
               {site.email}
             </a>
-            <p className="mt-5 text-sm leading-7 text-white/50">
-              {site.phone}
-              <br />
-              {site.location}
-            </p>
-            <div className="mt-12 flex gap-6 text-[10px] font-bold uppercase tracking-[.17em] text-white/60">
-              <a href={site.social.linkedin}>LinkedIn</a>
-              <a href={site.social.instagram}>Instagram</a>
-              <a href={site.social.youtube}>YouTube</a>
-            </div>
+            {(site.phone || site.city) && (
+              <p className="mt-5 text-sm leading-7 text-white/50">
+                {site.phone && site.phoneTel && (
+                  <>
+                    <a href={`tel:${site.phoneTel}`} className="hover:text-white">
+                      {site.phone}
+                    </a>
+                    <br />
+                  </>
+                )}
+                {site.city}
+              </p>
+            )}
+            <SocialLinks className="mt-12 flex gap-6 text-[10px] font-bold uppercase tracking-[.17em] text-white/60" />
             <div className="mt-20 rounded-[2rem] bg-plum p-8">
               <Image
                 src="/assets/nashwave-wave-white.svg"
@@ -134,7 +179,7 @@ export default function Contact() {
                 height={142}
                 className="mb-20 h-auto w-28 opacity-70"
               />
-              <p className="text-xl font-semibold">Close, curious and accountable to results.</p>
+              <p className="text-xl font-semibold">{copy.cardLine}</p>
             </div>
           </aside>
         </div>

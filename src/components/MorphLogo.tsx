@@ -1,20 +1,25 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { ui } from "@/lib/content";
 
-/** The big "nashwave" wordmark in the hero that shrinks and docks into the header on scroll. */
+/**
+ * The big "nashwave" wordmark in the hero that shrinks and docks into the header on scroll.
+ * Uses the exact brand artwork (white wordmark + coral dot) instead of rebuilding it from text,
+ * so the letters and wave always line up.
+ */
 function AnimatedHeroLogo() {
   return (
-    <svg className="animated-hero-logo" viewBox="0 0 1200 334" role="img" aria-label="Nashwave">
-      <text className="frame22-ave" x="781.65" y="251">
-        ave
-      </text>
-      <image href="/assets/nashwave-wave-mark.svg" x="528.44" y="99.08" width="381.025" height="180.908" />
-      <image href="/assets/nashwave-dot.svg" x="1166.97" y="220.18" width="33.028" height="33.028" />
-      <text className="frame22-nash" x="0" y="251">
-        nash
-      </text>
-    </svg>
+    <Image
+      className="animated-hero-logo"
+      src="/assets/nashwave-logo-white.svg"
+      alt="Nashwave"
+      width={1200}
+      height={334}
+      priority
+      unoptimized
+    />
   );
 }
 
@@ -60,7 +65,7 @@ export default function MorphLogo() {
   }, []);
 
   return (
-    <a ref={ref} href="#top" aria-label="Nashwave home" className={`morph-logo ${docked ? "is-docked" : ""}`}>
+    <a ref={ref} href="#top" aria-label={ui.homeLogoLabel} className={`morph-logo ${docked ? "is-docked" : ""}`}>
       <AnimatedHeroLogo />
     </a>
   );

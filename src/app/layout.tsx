@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Sora } from "next/font/google";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { site } from "@/lib/content";
 import "./globals.css";
 
@@ -19,7 +21,7 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: site.title,
+  title: { default: site.title, template: `%s | ${site.name}` },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: {
@@ -28,13 +30,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: site.title,
     description: site.description,
-    images: [{ url: "/assets/nashwave-ocean.jpg", alt: "Nashwave — Turn the Tide. Move the Business." }],
+    images: [{ url: site.shareImage, alt: `${site.name} — ${site.tagline}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
-    images: ["/assets/nashwave-ocean.jpg"],
+    images: [site.shareImage],
   },
 };
 
@@ -45,7 +47,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${sora.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
