@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { caseStudies, caseStudiesSection as copy, getService, routes } from "@/lib/content";
-import { Label } from "./ui";
+import { Label, PAGE_TOP, Title } from "./ui";
 
 /** Case-study grid for /work. Shows a "coming soon" panel while `caseStudies` in content.ts is empty. */
-export default function CaseStudies() {
+export default function CaseStudies({ asPage = false }: { asPage?: boolean }) {
   return (
-    <section className="bg-sand px-5 py-24 md:px-10 lg:px-16 lg:py-36">
+    <section className={`bg-sand px-5 py-24 md:px-10 lg:px-16 lg:py-36 ${asPage ? PAGE_TOP : ""}`}>
       <div className="mx-auto max-w-[1400px]">
         <Label>{copy.label}</Label>
-        <h2 className="display-title mb-16">{copy.title}</h2>
+        <Title asPage={asPage} className="display-title mb-16">
+          {copy.title}
+        </Title>
 
         {caseStudies.length === 0 ? (
           <div className="relative overflow-hidden rounded-[2rem] border border-dashed border-plum/30 bg-white px-8 py-16 md:px-14 md:py-20">

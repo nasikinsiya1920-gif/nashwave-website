@@ -7,18 +7,12 @@
 
 export const site = {
   name: "Nashwave",
-  url: "https://nashwave.tech",
+  url: "https://nashwavetech.com",
   title: "Nashwave | Media Marketing & Digital Solutions — Turn the Tide. Move the Business.",
   description:
     "Nashwave is a media marketing and digital solutions company that turns business challenges and digital shifts into momentum through creativity and technology.",
   tagline: "Turn the Tide. Move the Business.",
-  email: "hello@nashwave.tech",
-  /** TODO: phone number as it should be displayed, e.g. "+44 20 1234 5678". Hidden while empty. */
-  phone: "",
-  /** TODO: the same number for the tel: link, digits and + only, e.g. "+442012345678". */
-  phoneTel: "",
-  /** TODO: city / country line shown on the contact page, e.g. "London, UK". Hidden while empty. */
-  city: "",
+  email: "zennxtmedia@gmail.com",
   /** TODO: full profile URLs. Any link left empty is hidden everywhere on the site. */
   social: {
     linkedin: "",
@@ -32,6 +26,47 @@ export const site = {
   showreelUrl: "",
   /** Default share image used by every page unless the page sets its own. */
   shareImage: "/assets/nashwave-ocean.jpg",
+};
+
+/**
+ * Directors people can call or WhatsApp directly. Shown in the contact section, the footer
+ * and the closing call to action.
+ * - phone: as displayed · tel: digits and + only, for tap-to-call · whatsapp: digits only, for wa.me links
+ */
+export const contacts = [
+  {
+    name: "Zainab Arsiwala",
+    role: "Director – Social Media",
+    phone: "+91 90290 43014",
+    tel: "+919029043014",
+    whatsapp: "919029043014",
+  },
+  {
+    name: "Insiya Arsiwala",
+    role: "Director – Design",
+    phone: "+91 90042 16877",
+    tel: "+919004216877",
+    whatsapp: "919004216877",
+  },
+];
+
+export type DirectContact = (typeof contacts)[number];
+
+export const firstName = (person: DirectContact) => person.name.split(" ")[0];
+
+/** Pre-filled WhatsApp chat link, e.g. "Hi Zainab, I'm reaching out from the Nashwave website". */
+export const whatsappLink = (person: DirectContact) =>
+  `https://wa.me/${person.whatsapp}?text=${encodeURIComponent(
+    `Hi ${firstName(person)}, I'm reaching out from the Nashwave website`,
+  ).replace(/'/g, "%27")}`;
+
+/** Labels used around the director contacts. */
+export const contactPeople = {
+  heading: "Talk to us directly",
+  whatsapp: "WhatsApp",
+  callLabel: "Call",
+  whatsappLabel: "WhatsApp",
+  ctaPrefix: "Or call",
 };
 
 export const socialLinks = [

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { finalCtaSection as copy, routes, site } from "@/lib/content";
+import { contactPeople, contacts, finalCtaSection as copy, firstName, routes, site } from "@/lib/content";
 import { Label } from "./ui";
 
 /** Closing call to action. The homepage passes "#contact"; other pages link to /contact (or a pre-filled variant). */
@@ -33,6 +33,21 @@ export default function FinalCta({
             {copy.emailPrefix} {site.email}
           </a>
         </div>
+        <p className="mt-4 text-xs text-white/55">
+          {contactPeople.ctaPrefix}{" "}
+          {contacts.map((person, i) => (
+            <span key={person.tel}>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              <a
+                href={`tel:${person.tel}`}
+                aria-label={`${contactPeople.callLabel} ${person.name}`}
+                className="inline-block py-2 text-white/80 underline decoration-white/30 underline-offset-4 hover:text-coral-soft"
+              >
+                {firstName(person)}
+              </a>
+            </span>
+          ))}
+        </p>
         <p className="mt-20 text-[10px] font-bold uppercase tracking-[.25em] text-white/35">{site.tagline}</p>
       </div>
     </section>

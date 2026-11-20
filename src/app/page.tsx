@@ -5,7 +5,6 @@ import FinalCta from "@/components/FinalCta";
 import Hero from "@/components/Hero";
 import MorphLogo from "@/components/MorphLogo";
 import Services from "@/components/Services";
-import Showreel from "@/components/Showreel";
 import Tagline from "@/components/Tagline";
 import WhyUs from "@/components/WhyUs";
 
@@ -16,7 +15,7 @@ export default function Home() {
       <MorphLogo />
       <Hero />
       <Tagline />
-      <Showreel />
+      {/* "See the work move" showreel is hidden for now — re-add <Showreel /> here (and its import) to show it. */}
       <About />
       <Services showAllLink />
       <WhyUs count={3} />

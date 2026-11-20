@@ -29,7 +29,8 @@ Almost everything is edited in **`src/lib/content.ts`** — the pages read from 
 
 | What | Where in `src/lib/content.ts` |
 |---|---|
-| Email, phone, city, social links, showreel video | `site` |
+| Email, social links, showreel video | `site` |
+| Directors' names, roles, phone & WhatsApp numbers | `contacts` |
 | Navigation & footer links | `routes`, `navLinks`, `footerNav` |
 | Services (title, description, "What's included", URL slug) | `services` |
 | "Why Us" reasons (homepage shows the first 3, /about all 6) | `reasons` |
@@ -62,8 +63,6 @@ Other places:
 
 All in `src/lib/content.ts` unless noted. Empty values are hidden on the site; placeholders are labelled.
 
-- `site.phone` + `site.phoneTel` — phone number (display text and tel: digits)
-- `site.city` — city / country
 - `site.social.linkedin`, `.instagram`, `.youtube` — profile URLs
 - `site.showreelUrl` — YouTube/Vimeo link or video file for the showreel
 - `clients` (then set `clientsArePlaceholder = false`) — client names

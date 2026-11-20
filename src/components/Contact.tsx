@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { contactSection as copy, getService, services, site } from "@/lib/content";
+import DirectContacts from "./DirectContacts";
 import { Label, PAGE_TOP, SocialLinks, Title } from "./ui";
 
 /**
@@ -156,19 +157,7 @@ export default function Contact({
             <a href={`mailto:${site.email}`} className="mt-9 block text-2xl font-semibold text-coral-soft">
               {site.email}
             </a>
-            {(site.phone || site.city) && (
-              <p className="mt-5 text-sm leading-7 text-white/50">
-                {site.phone && site.phoneTel && (
-                  <>
-                    <a href={`tel:${site.phoneTel}`} className="hover:text-white">
-                      {site.phone}
-                    </a>
-                    <br />
-                  </>
-                )}
-                {site.city}
-              </p>
-            )}
+            <DirectContacts />
             <SocialLinks className="mt-12 flex gap-6 text-[10px] font-bold uppercase tracking-[.17em] text-white/60" />
             <div className="mt-20 rounded-[2rem] bg-plum p-8">
               <Image

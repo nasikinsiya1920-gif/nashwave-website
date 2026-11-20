@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
 import { taglineSection as copy } from "@/lib/content";
 
 /** Homepage-only intro under the hero. Its links scroll within the homepage. */
 export default function Tagline() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const waveRef = useRef<HTMLDivElement>(null);
   const [cursorVisible, setCursorVisible] = useState(false);
 
   return (
@@ -23,27 +21,9 @@ export default function Tagline() {
           cursorRef.current.style.left = `${x}px`;
           cursorRef.current.style.top = `${y}px`;
         }
-        if (waveRef.current) {
-          const xp = x / bounds.width - 0.5;
-          const yp = y / bounds.height - 0.5;
-          waveRef.current.style.transform = `translate3d(${xp * 70}px, ${yp * 52}px, 0) rotate(${xp * 12}deg)`;
-        }
       }}
     >
       <div className="digital-grid absolute inset-0 opacity-15" />
-      <div
-        ref={waveRef}
-        className="pointer-events-none absolute -bottom-24 -right-16 z-20 w-[clamp(13rem,22vw,22rem)] opacity-90 transition-transform duration-300 ease-out will-change-transform md:-bottom-28 md:right-4"
-      >
-        <Image
-          src="/assets/nashwave-loop-sculpture.png"
-          alt=""
-          width={720}
-          height={720}
-          sizes="(min-width: 1024px) 22vw, 13rem"
-          className="h-auto w-full"
-        />
-      </div>
       <div className="relative mx-auto w-full max-w-[1400px]">
         <h1 className="max-w-[1050px] text-[clamp(2.8rem,6.5vw,6.5rem)] font-semibold leading-[0.88] tracking-[-0.065em]">
           <span className="block">{copy.line1}</span>

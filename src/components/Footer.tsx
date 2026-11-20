@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { footerNav as copy, routes, services, site, ui } from "@/lib/content";
+import { contactPeople, contacts, footerNav as copy, routes, services, site, ui } from "@/lib/content";
 import { SocialLinks } from "./ui";
 
 export default function Footer() {
@@ -40,7 +40,21 @@ export default function Footer() {
           <div className="footer-col">
             <b>{copy.connectTitle}</b>
             <a href={`mailto:${site.email}`}>{site.email}</a>
-            {site.phone && site.phoneTel && <a href={`tel:${site.phoneTel}`}>{site.phone}</a>}
+            {contacts.map((person) => (
+              <div key={person.tel} className="mt-5">
+                <span className="block text-xs font-semibold text-ink/75">{person.name}</span>
+                <span className="block text-[9px] font-bold uppercase tracking-[.16em] text-plum/65">
+                  {person.role}
+                </span>
+                <a
+                  href={`tel:${person.tel}`}
+                  aria-label={`${contactPeople.callLabel} ${person.name}`}
+                  className="!mt-1"
+                >
+                  {person.phone}
+                </a>
+              </div>
+            ))}
             <SocialLinks />
           </div>
         </div>
