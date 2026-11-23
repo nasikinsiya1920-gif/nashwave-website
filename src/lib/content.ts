@@ -12,7 +12,7 @@ export const site = {
   description:
     "Nashwave is a media marketing and digital solutions company that turns business challenges and digital shifts into momentum through creativity and technology.",
   tagline: "Turn the Tide. Move the Business.",
-  email: "zennxtmedia@gmail.com",
+  email: "sales@nashwavetech.com",
   /** TODO: full profile URLs. Any link left empty is hidden everywhere on the site. */
   social: {
     linkedin: "",
@@ -31,19 +31,21 @@ export const site = {
 /**
  * Directors people can call or WhatsApp directly. Shown in the contact section, the footer
  * and the closing call to action.
- * - phone: as displayed · tel: digits and + only, for tap-to-call · whatsapp: digits only, for wa.me links
+ * - email: direct address · phone: as displayed · tel: digits and + only, for tap-to-call · whatsapp: digits only, for wa.me links
  */
 export const contacts = [
   {
     name: "Zainab Arsiwala",
     role: "Director – Social Media",
+    email: "social@nashwavetech.com",
     phone: "+91 90290 43014",
     tel: "+919029043014",
     whatsapp: "919029043014",
   },
   {
-    name: "Insiya Arsiwala",
+    name: "Insiya Nasikwala",
     role: "Director – Design",
+    email: "design@nashwavetech.com",
     phone: "+91 90042 16877",
     tel: "+919004216877",
     whatsapp: "919004216877",
@@ -65,6 +67,7 @@ export const contactPeople = {
   heading: "Talk to us directly",
   whatsapp: "WhatsApp",
   callLabel: "Call",
+  emailLabel: "Email",
   whatsappLabel: "WhatsApp",
   ctaPrefix: "Or call",
 };

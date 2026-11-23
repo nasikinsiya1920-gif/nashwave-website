@@ -53,6 +53,13 @@ export default function Footer() {
                 >
                   {person.phone}
                 </a>
+                <a
+                  href={`mailto:${person.email}`}
+                  aria-label={`${contactPeople.emailLabel} ${person.name}`}
+                  className="!mt-1"
+                >
+                  {person.email}
+                </a>
               </div>
             ))}
             <SocialLinks />

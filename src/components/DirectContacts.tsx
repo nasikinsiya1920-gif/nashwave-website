@@ -1,6 +1,6 @@
 import { contactPeople as copy, contacts, whatsappLink } from "@/lib/content";
 
-/** "Talk to us directly": one card per director with tap-to-call and a WhatsApp button. Dark sections only. */
+/** "Talk to us directly": one card per director with email, tap-to-call and a WhatsApp button. Dark sections only. */
 export default function DirectContacts() {
   return (
     <div className="mt-10">
@@ -10,7 +10,14 @@ export default function DirectContacts() {
           <li key={person.tel} className="rounded-[1.5rem] border border-white/15 p-6">
             <p className="text-lg font-semibold text-white">{person.name}</p>
             <p className="mt-1 text-[10px] font-bold uppercase tracking-[.2em] text-coral-soft">{person.role}</p>
-            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <a
+              href={`mailto:${person.email}`}
+              aria-label={`${copy.emailLabel} ${person.name}`}
+              className="mt-3 inline-flex min-h-11 items-center text-sm text-white/55 transition-colors hover:text-white"
+            >
+              {person.email}
+            </a>
+            <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-3">
               <a
                 href={`tel:${person.tel}`}
                 aria-label={`${copy.callLabel} ${person.name}`}
