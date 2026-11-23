@@ -111,7 +111,7 @@ export const footerNav = {
     { name: "Contact", href: routes.contact },
   ],
   blurb: "Media, marketing and digital solutions that turn change into momentum.",
-  rights: "Nashwave. All rights reserved.",
+  rights: "Nashwave. All rights reserved. Made in Mumbai.",
   privacy: "Privacy",
   terms: "Terms",
 };
