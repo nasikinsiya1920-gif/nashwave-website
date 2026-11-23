@@ -1,15 +1,22 @@
 # Nashwave website
 
 Next.js (App Router) + TypeScript + Tailwind CSS v4, converted from the Figma Make design "Nashwave-Logo-Concepts".
+Hosted on **Cloudflare Workers** using [vinext](https://github.com/cloudflare/vinext), Cloudflare's recommended way to run Next.js apps on Workers.
+vinext builds the same `src/app` code with Vite instead of `next build`.
 
 ## Run it locally
 
 ```bash
 npm install
-npm run dev            # http://localhost:3000
-npm run build          # production build check
-npm run check:links    # crawl every page of the running site for broken links (dev or `npm start`)
+cp .dev.vars.example .dev.vars   # then put a real Resend API key in .dev.vars (needed only for the contact form)
+npm run dev            # http://localhost:3000 (Vite dev server, runs in the Workers runtime)
+npm run build          # production build into dist/
+npm run preview        # build, then serve the built Worker locally with Wrangler on http://localhost:3000
+npm run typecheck      # TypeScript check
+npm run check:links    # crawl every page of the running site for broken links (run `npm run preview` first)
 ```
+
+`.dev.vars` holds local secrets and is git-ignored — never commit it.
 
 ## Pages
 
@@ -49,15 +56,39 @@ Other places:
 | Images & logos | `public/assets/` |
 | Favicon | `src/app/icon.svg` |
 | Sitemap | `src/app/sitemap.ts` |
+| Contact form email sending | `src/app/api/contact/route.ts` |
+| Cloudflare Worker settings | `wrangler.jsonc` (build settings: `vite.config.ts`) |
 
-## Deploying on Netlify
+## Deploying on Cloudflare Workers
 
-1. Push this folder to a GitHub repo.
-2. Netlify → **Add new site → Import an existing project → GitHub** → pick the repo → **Deploy**.
-   Netlify detects Next.js automatically (settings are also in `netlify.toml`).
-3. Contact form: submissions show up in Netlify → your site → **Forms**.
-   (Enable form detection under *Forms* if Netlify asks.) The form's field list lives in
-   `public/__forms.html` — keep it in sync if you add or rename fields in `Contact.tsx`.
+The site deploys from GitHub with **Workers Builds** to a Worker named **`nashwave`** (the `name` in `wrangler.jsonc` must match the Worker name in the dashboard).
+
+1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository** → pick this repo.
+2. Settings:
+   - Project / Worker name: `nashwave`
+   - Build command: `npm run build`
+   - Deploy command: `npx wrangler deploy`
+   - Root directory: `/` (leave empty)
+3. After the first deploy, open the Worker → **Settings → Variables and Secrets** and add:
+   - `RESEND_API_KEY` — type **Secret** — your Resend API key
+   - `CONTACT_TO_EMAIL` — type **Text** — where enquiries go, e.g. `sales@nashwavetech.com` (comma-separate several)
+   - `CONTACT_FROM_EMAIL` — type **Text** — the sender, on a domain verified in Resend, e.g. `Nashwave Website <website@nashwavetech.com>`
+4. Add the custom domain under the Worker → **Settings → Domains & Routes**.
+
+`wrangler.jsonc` sets `keep_vars: true` so deploys don't delete the dashboard variables.
+`npm run build` writes the final Worker config to `dist/server/wrangler.json`, and `npx wrangler deploy` picks it up automatically.
+To deploy from your own machine instead: `npx wrangler login`, then `npm run deploy`.
+
+### Contact form
+
+The form posts to `/api/contact` (`src/app/api/contact/route.ts`), which emails each enquiry via [Resend](https://resend.com) with the visitor's address as reply-to.
+Verify your sending domain (e.g. nashwavetech.com) in Resend first, or Resend will reject the `CONTACT_FROM_EMAIL` address.
+Errors are visible in the Worker's **Logs** in the Cloudflare dashboard.
+
+### Images
+
+`next/image` images are resized by Cloudflare Images through the `IMAGES` binding in `wrangler.jsonc` (served from `/_next/image`).
+Cloudflare Images transformations are billed per unique transformation beyond the free allowance.
 
 ## Still to fill in
 

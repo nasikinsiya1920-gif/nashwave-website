@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local `npm run dev` / `npm run preview`. Never commit .dev.vars.
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
+CONTACT_TO_EMAIL=sales@nashwavetech.com
+CONTACT_FROM_EMAIL=Nashwave Website <website@nashwavetech.com>
