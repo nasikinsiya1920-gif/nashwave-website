@@ -7,10 +7,9 @@ import DirectContacts from "./DirectContacts";
 import { Label, PAGE_TOP, SocialLinks, Title } from "./ui";
 
 /**
- * Contact form powered by Netlify Forms.
- * Netlify detects the form from /public/__forms.html at build time;
- * submissions appear in Netlify → your site → Forms.
- * Keep the field names (name, email, company, service, message) in sync with that file.
+ * Contact form. Submissions are POSTed to /api/contact (src/app/api/contact/route.ts),
+ * which emails them via Resend.
+ * Keep the field names (name, email, company, service, message, bot-field) in sync with that route.
  * Several services can be chosen; they are sent as one comma-separated `service` field.
  *
  * `serviceSlugs` pre-selects services (used by /contact?service=<slug> or ?service=<slug>,<slug>).
@@ -36,11 +35,7 @@ export default function Contact({
     setStatus("sending");
     try {
       const data = new FormData(event.currentTarget);
-      const res = await fetch("/__forms.html", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-      });
+      const res = await fetch("/api/contact", { method: "POST", body: data });
       if (!res.ok) throw new Error(`Form submission failed: ${res.status}`);
       setStatus("sent");
     } catch {
@@ -73,7 +68,6 @@ export default function Contact({
               </div>
             ) : (
               <form name="contact" onSubmit={submit} className="mt-14 grid gap-x-5 gap-y-8 md:grid-cols-2">
-                <input type="hidden" name="form-name" value="contact" />
                 <p hidden>
                   <label>
                     {copy.honeypot} <input name="bot-field" />

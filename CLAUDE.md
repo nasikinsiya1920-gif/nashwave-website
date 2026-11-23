@@ -1,9 +1,12 @@
 # CLAUDE.md
 
-Marketing site for Nashwave (nashwavetech.com, hosted on Netlify) — media marketing & digital solutions. Tagline: "Turn the Tide. Move the Business."
+Marketing site for Nashwave (nashwavetech.com, hosted on Cloudflare Workers) — media marketing & digital solutions. Tagline: "Turn the Tide. Move the Business."
 
 ## Stack
-- Next.js 16 App Router, TypeScript, Tailwind CSS v4 (`@tailwindcss/postcss`), deployed on Netlify from GitHub.
+- Next.js 16 App Router, TypeScript, Tailwind CSS v4 (`@tailwindcss/postcss`).
+- Built and served by **vinext** (Vite-based reimplementation of the Next.js API) on **Cloudflare Workers**, deployed from GitHub with Workers Builds. `next build` / `next dev` are not used: use `npm run dev`, `npm run build`, `npm run preview`.
+- Worker config: `wrangler.jsonc` (Worker name `nashwave`, `ASSETS` + `IMAGES` bindings, `keep_vars: true`); Vite config: `vite.config.ts`. The build writes `dist/server/wrangler.json`, which `wrangler deploy` uses.
+- Server code reads Cloudflare variables/secrets with `import { env } from "cloudflare:workers"` (typed in `src/cloudflare-env.d.ts`), not `process.env`. Local values go in `.dev.vars` (git-ignored; template in `.dev.vars.example`).
 - Fonts via `next/font/google`: DM Sans (body, `--font-dm-sans`) and Sora 800 (`--font-sora`).
 - `Header` and `Footer` live in `src/app/layout.tsx` and wrap every page.
 
@@ -17,6 +20,7 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Netlify) — media mark
 | `/work` | `work/page.tsx` | CaseStudies (asPage), ClientLogos, Testimonials, FinalCta |
 | `/contact` | `contact/page.tsx` | Contact (asPage) via ContactFromParams in `<Suspense>` (reads `?service=<slug>`) |
 | `/privacy`, `/terms` | `privacy/`, `terms/` | LegalPage — **draft text, needs legal review** |
+| `/api/contact` | `api/contact/route.ts` | POST handler: validates the contact form and emails it via Resend |
 | 404 | `not-found.tsx` | Unknown URLs and unknown service slugs (`dynamicParams = false`) |
 
 ## Conventions
@@ -31,5 +35,5 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Netlify) — media mark
 - Use the theme tokens from `globals.css` (`plum`, `coral`, `coral-soft`, `ink`, `sand`, `sand-deep`, `deep`, `teal`) — no new hard-coded hex values.
 - Bespoke styles/animations are plain CSS classes in `globals.css`. Images via `next/image`; SVGs use `unoptimized`.
 - Client components (`"use client"`) only where there is state, pointer/scroll logic or URL params: Header, MorphLogo, Hero, Tagline, Showreel, Approach (scroll-in + hover state for the process board), Testimonials, Contact, ContactFromParams.
-- Contact form posts to Netlify Forms via `/__forms.html`; keep `public/__forms.html` field names (name, email, company, service, message) in sync with `Contact.tsx`.
-- Always run `npm run build` and `npm run check:links` (against a running server) before pushing.
+- Contact form POSTs `FormData` to `/api/contact`, which sends it with Resend using `RESEND_API_KEY` (secret), `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL`. Keep the field names (name, email, company, service, message, bot-field honeypot) in sync between `Contact.tsx` and the route.
+- Always run `npm run typecheck`, `npm run build`, and `npm run check:links` (against `npm run preview`) before pushing.

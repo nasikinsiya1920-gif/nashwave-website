@@ -529,7 +529,7 @@ export const privacyPage = {
     {
       heading: "Sharing your information",
       body: [
-        "Form submissions are processed by our website host (Netlify) on our behalf. We do not sell your personal information.",
+        "Our website is hosted by Cloudflare, and form submissions are delivered to us by email through Resend, both on our behalf. We do not sell your personal information.",
         "[TODO: list any other processors or third parties.]",
       ],
     },

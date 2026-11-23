@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker name in the Cloudflare dashboard.
+  "name": "nashwave",
+  "compatibility_date": "2026-11-23",
+  // vinext's Worker entry. `npm run build` writes the final config to dist/server/wrangler.json,
+  // and `wrangler deploy` picks that up automatically (via .wrangler/deploy/config.json).
+  "main": "vinext/server/fetch-handler",
+  "assets": {
+    "directory": "dist/client",
+    "html_handling": "none",
+    "not_found_handling": "none",
+    "binding": "ASSETS",
+    "run_worker_first": ["/*", "!/_next/static/*", "!/*/_next/static/*"]
+  },
+  // Cloudflare Images: resizes next/image images served via /_next/image.
+  "images": {
+    "binding": "IMAGES"
+  },
+  // CONTACT_TO_EMAIL / CONTACT_FROM_EMAIL are set in the dashboard (Settings → Variables and Secrets).
+  // keep_vars stops `wrangler deploy` from deleting them, since they aren't listed here.
+  "keep_vars": true,
+  "observability": {
+    "enabled": true
+  }
+}
