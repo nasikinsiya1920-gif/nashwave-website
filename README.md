@@ -79,6 +79,11 @@ The site deploys from GitHub with **Workers Builds** to a Worker named **`nashwa
 `npm run build` writes the final Worker config to `dist/server/wrangler.json`, and `npx wrangler deploy` picks it up automatically.
 To deploy from your own machine instead: `npx wrangler login`, then `npm run deploy`.
 
+### CI checks (GitHub Actions)
+
+`.github/workflows/ci.yml` runs on every pull request and every push to `main`: typecheck, build, the local Cloudflare preview (`wrangler dev`), the link check, and a contact-API validation test (no email is sent).
+Results show as a **CI** check on each pull request. It only checks: Cloudflare Workers Builds still does the deploys.
+
 ### Contact form
 
 The form posts to `/api/contact` (`src/app/api/contact/route.ts`), which emails each enquiry via [Resend](https://resend.com) with the visitor's address as reply-to.
