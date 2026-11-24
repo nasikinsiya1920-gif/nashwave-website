@@ -17,6 +17,13 @@
   "images": {
     "binding": "IMAGES"
   },
+  // Settings for Worker Previews (Cloudflare's builds of non-main branches, `wrangler preview`).
+  // Previews don't inherit production bindings, so the IMAGES binding is repeated here.
+  "previews": {
+    "images": {
+      "binding": "IMAGES"
+    }
+  },
   // CONTACT_TO_EMAIL / CONTACT_FROM_EMAIL are set in the dashboard (Settings → Variables and Secrets).
   // keep_vars stops `wrangler deploy` from deleting them, since they aren't listed here.
   "keep_vars": true,
