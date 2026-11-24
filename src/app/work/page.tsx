@@ -9,7 +9,7 @@ export const metadata = pageMetadata({ ...pageMeta.work, path: routes.work });
 
 export default function WorkPage() {
   return (
-    <main className="overflow-hidden bg-sand text-ink">
+    <main className="overflow-x-clip bg-sand text-ink">
       {/* "See the work move" showreel is hidden for now. To bring it back, import Showreel and
           render <Showreel asPage /> here, then change CaseStudies back to <CaseStudies />. */}
       <CaseStudies asPage />

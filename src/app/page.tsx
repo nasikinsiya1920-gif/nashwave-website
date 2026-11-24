@@ -11,7 +11,7 @@ import WhyUs from "@/components/WhyUs";
 // Homepage. CTAs here scroll to the on-page #contact section; other pages link to /contact.
 export default function Home() {
   return (
-    <main className="overflow-hidden bg-sand text-ink">
+    <main className="overflow-x-clip bg-sand text-ink">
       <MorphLogo />
       <Hero />
       <Tagline />

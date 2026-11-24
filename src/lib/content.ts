@@ -350,7 +350,8 @@ export const aboutSection = {
 
 export const servicesSection = {
   label: "Our Services",
-  title: "Everything a brand needs to move.",
+  // Shown as two lines.
+  title: ["Everything a brand", "needs to move."],
   intro: "Six connected capabilities, built to work alone or as one integrated engine.",
   allLink: "Explore all services",
 };

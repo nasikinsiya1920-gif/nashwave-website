@@ -44,7 +44,7 @@ export default async function ServicePage({ params }: Props) {
   };
 
   return (
-    <main className="overflow-hidden bg-sand text-ink">
+    <main className="overflow-x-clip bg-sand text-ink">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
