@@ -664,6 +664,118 @@ html.menu-open body {
   transform: none;
 }
 
+/* ---------- Products (/products) ---------- */
+.product-category-title {
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+.product-chip {
+  border: 1px solid color-mix(in srgb, var(--color-plum) 25%, transparent);
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: var(--color-plum);
+  font-size: 12px;
+  font-weight: 600;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.product-chip:hover {
+  color: white;
+  background: var(--color-plum);
+}
+.product-tag {
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--color-plum);
+  font-size: 11px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--color-plum) 8%, transparent);
+}
+/* Outline button for light backgrounds (.btn-outline is for dark ones). */
+@layer components {
+  .btn-outline-dark {
+    display: inline-flex;
+  }
+}
+.btn-outline-dark {
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 25%, transparent);
+  border-radius: 999px;
+  padding: 16px 24px;
+  color: var(--color-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+.btn-outline-dark:hover {
+  color: white;
+  background: var(--color-ink);
+}
+/* Desktop screenshot in a browser frame, phone screenshot overlapping its lower corner. */
+.product-mockup {
+  position: relative;
+  padding: 0 14% 12% 0;
+}
+.browser-frame {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 30px 70px -30px color-mix(in srgb, var(--color-deep) 45%, transparent);
+}
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+  background: var(--color-sand-deep);
+}
+.browser-bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-ink) 18%, transparent);
+}
+.browser-bar b {
+  flex: 1;
+  margin-right: 33px;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--color-ink) 50%, transparent);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.phone-frame {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  overflow: hidden;
+  border: 6px solid var(--color-ink);
+  border-radius: 26px;
+  background: var(--color-ink);
+  box-shadow: 0 30px 60px -24px color-mix(in srgb, var(--color-deep) 55%, transparent);
+}
+.phone-frame--static {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
 /* ---------- Why us: kinetic icons ---------- */
 .kinetic-icon {
   position: relative;

@@ -21,7 +21,7 @@ export default function Home() {
       <WhyUs count={3} />
       <Approach ctaHref="#contact" />
       {/* "Brands that chose to move with us" (ClientLogos + Testimonials) is hidden on the homepage
-          until real clients are available. It is still shown on /work. */}
+          until real clients are available (ClientLogos is not used on any page right now). */}
       <Contact />
       <FinalCta ctaHref="#contact" />
     </main>

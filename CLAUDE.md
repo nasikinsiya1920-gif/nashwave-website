@@ -17,7 +17,7 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Cloudflare Workers) —
 | `/about` | `about/page.tsx` | About (asPage), WhyUs (all 6), Approach, FinalCta |
 | `/services` | `services/page.tsx` | Services (asPage), Approach, FinalCta |
 | `/services/[slug]` | `services/[slug]/page.tsx` | ServiceHero, ServiceIncludes, Approach, WhyUs (3), Testimonials (single), Services (others), FinalCta |
-| `/work` | `work/page.tsx` | CaseStudies (asPage), ClientLogos, Testimonials, FinalCta |
+| `/products` | `products/page.tsx` | Products (intro + one section per `productCategories` entry), FinalCta. `/work` 308-redirects here (`next.config.ts`) |
 | `/contact` | `contact/page.tsx` | Contact (asPage) via ContactFromParams in `<Suspense>` (reads `?service=<slug>`) |
 | `/privacy`, `/terms` | `privacy/`, `terms/` | LegalPage — **draft text, needs legal review** |
 | `/api/contact` | `api/contact/route.ts` | POST handler: validates the contact form and emails it via Resend |
@@ -34,7 +34,7 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Cloudflare Workers) —
 - Scroll reveals: wrap text in `<Reveal>` (`variant="line"` for heading lines, `delay` to stagger). "Start with a conversation" uses `.btn-attention` (animated colour sweep + pulse). Every animation has a `prefers-reduced-motion` fallback — keep it that way.
 - Footer: big looping light logo (`FooterLogo`) above the links. When the whole footer fits on screen, `html.footer-curtain` pins it behind `<main>`, which lifts away like a curtain (rounded bottom + shadow); on phones it scrolls normally.
 - Director contacts (`contacts` in content.ts) appear in Contact (via DirectContacts), Footer and FinalCta; WhatsApp links come from `whatsappLink()`.
-- Empty placeholders hide themselves: social links render only when set; the showreel modal embeds `site.showreelUrl` when set; case studies show a "coming soon" panel while empty. Sample clients/testimonials show a "Placeholder" tag until flagged as real.
+- Empty placeholders hide themselves: social links render only when set; the showreel modal embeds `site.showreelUrl` when set; product categories with no items are hidden (including from the "Jump to" links). Sample clients/testimonials show a "Placeholder" tag until flagged as real.
 - Per-page metadata via `pageMetadata()` in `src/lib/seo.ts`. Add every new route to `src/app/sitemap.ts`.
 - Use the theme tokens from `globals.css` (`plum`, `coral`, `coral-soft`, `ink`, `sand`, `sand-deep`, `deep`, `teal`) — no new hard-coded hex values.
 - Bespoke styles/animations are plain CSS classes in `globals.css`. Images via `next/image`; SVGs use `unoptimized`.

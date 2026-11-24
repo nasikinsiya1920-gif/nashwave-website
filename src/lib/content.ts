@@ -88,7 +88,7 @@ export const routes = {
   approach: "/about#approach",
   services: "/services",
   service: (slug: string) => `/services/${slug}`,
-  work: "/work",
+  products: "/products",
   contact: "/contact",
   contactFor: (slug: string) => `/contact?service=${slug}`,
   privacy: "/privacy",
@@ -100,7 +100,7 @@ export const navLinks = [
   { name: "About", href: routes.about, match: routes.about },
   { name: "Services", href: routes.services, match: routes.services },
   { name: "Approach", href: routes.approach, match: null },
-  { name: "Work", href: routes.work, match: routes.work },
+  { name: "Products", href: routes.products, match: routes.products },
 ];
 
 export const footerNav = {
@@ -110,7 +110,7 @@ export const footerNav = {
   company: [
     { name: "About", href: routes.about },
     { name: "Approach", href: routes.approach },
-    { name: "Work", href: routes.work },
+    { name: "Products", href: routes.products },
     { name: "Contact", href: routes.contact },
   ],
   blurb: "Media, marketing and digital solutions that turn change into momentum.",
@@ -282,20 +282,106 @@ export const quotes = [
   },
 ];
 
-export type CaseStudy = {
-  title: string;
-  client: string;
-  /** Slug of the related service, e.g. "brand-creative". */
-  service: string;
-  summary: string;
-  /** Image path under /public, e.g. "/assets/case-acme.jpg". */
-  image: string;
-  /** Optional link to a full write-up. */
-  href?: string;
+/* ------------------------------------------------------------------ */
+/* Products (/products): what we've built and run, grouped by service  */
+/* ------------------------------------------------------------------ */
+
+export type ProductItem = {
+  name: string;
+  /** Public address, shown and linked as "Visit". Leave empty to hide the link. */
+  url: string;
+  /** Short label for the address, e.g. "essarsons.com" or "@handle". */
+  urlLabel: string;
+  /** Text for the main button (defaults to "Visit <urlLabel>"). */
+  visitLabel?: string;
+  description: string;
+  tags: string[];
+  /** Screenshots under /public. desktop: 1440×900, phone: 585×996. */
+  images: { desktop?: string; phone?: string; gallery?: string[] };
+  /** Extra buttons, e.g. a free trial. */
+  ctas?: { label: string; href: string }[];
 };
 
-/** TODO: add case studies here. While empty, /work shows a "Case studies coming soon" placeholder. */
-export const caseStudies: CaseStudy[] = [];
+export type ProductCategory = {
+  /** Anchor id, e.g. "website-design" → /products#website-design */
+  id: string;
+  title: string;
+  intro: string;
+  /** Slug of the related service page. */
+  service: string;
+  /** "showcase": browser + phone mockups. "profiles": social profile cards. "gallery": brand images. */
+  layout: "showcase" | "profiles" | "gallery";
+  /** A category with no items is hidden everywhere on the page. */
+  items: ProductItem[];
+};
+
+export const productCategories: ProductCategory[] = [
+  {
+    id: "website-design",
+    title: "Website design",
+    intro: "Fast, mobile-first websites that explain the business in seconds and turn visits into enquiries.",
+    service: "websites-digital-products",
+    layout: "showcase",
+    items: [
+      {
+        name: "Essar Sons Group",
+        url: "https://essarsons.com",
+        urlLabel: "essarsons.com",
+        description:
+          "A multi-page website for a group of glass, aluminium and construction businesses established 40 years ago: each division and firm, real project stories, client logos, and enquiries sent straight to the team by email.",
+        tags: ["Website design", "Development", "Enquiry forms"],
+        images: {
+          desktop: "/assets/products/essarsons-desktop.webp",
+          phone: "/assets/products/essarsons-phone.webp",
+        },
+      },
+    ],
+  },
+  {
+    id: "web-apps",
+    title: "Web apps",
+    intro:
+      "We also build custom web apps around how a business really works. Glass Optimizer is one of them: our own product for glass shops.",
+    service: "web-apps-data-automation",
+    layout: "showcase",
+    items: [
+      {
+        name: "Glass Optimizer",
+        url: "https://optimizer.nashwavetech.com",
+        urlLabel: "optimizer.nashwavetech.com",
+        description:
+          "A sheet-cutting optimiser for glass processors. Enter the sheet and piece sizes and it works out the exact cutting layout with the least wastage, with yield, offcuts, Excel export and printable piece labels.",
+        tags: ["Web app", "SaaS", "Free 3-day trial"],
+        images: {
+          desktop: "/assets/products/optimizer-desktop.webp",
+          phone: "/assets/products/optimizer-phone.webp",
+        },
+        visitLabel: "Start a free 3-day trial",
+      },
+    ],
+  },
+  {
+    id: "social-media",
+    title: "Social media",
+    intro: "Pages we plan, create and manage every day: content calendars, shoots, captions and community.",
+    service: "social-community",
+    layout: "profiles",
+    // TODO: add Radhika's and Sneha's Instagram pages (name, @handle, profile URL, profile screenshot).
+    items: [],
+  },
+  {
+    id: "branding",
+    title: "Branding",
+    intro: "Identities built to be recognised anywhere: logo, colour, type and the rules that hold them together.",
+    service: "brand-creative",
+    layout: "gallery",
+    // TODO: add the SR branding project (images from the brand guideline under /public/assets/products/).
+    items: [],
+  },
+];
+
+/** Categories that have something to show (empty ones are hidden). */
+export const liveProductCategories = productCategories.filter((c) => c.items.length > 0);
 
 
 /* ------------------------------------------------------------------ */
@@ -379,13 +465,16 @@ export const clientsSection = {
   title: "Brands that chose to move with us.",
 };
 
-export const caseStudiesSection = {
-  label: "Case Studies",
-  title: "Selected work.",
-  emptyTitle: "Case studies coming soon.",
-  emptyCopy: "Selected projects will be published here soon. In the meantime, let's talk about yours.",
-  emptyCta: "Start a project",
-  readMore: "Read case study →",
+export const productsPage = {
+  label: "Our Products",
+  // Shown as two lines.
+  title: ["Built, launched", "and growing."],
+  intro:
+    "Websites, web apps, social pages and brands we have designed, built and run, grouped by what we do.",
+  jumpLabel: "Jump to",
+  visit: "Visit",
+  serviceLink: "About this service",
+  gallerySuffix: "brand guideline",
 };
 
 export const contactSection = {
@@ -460,11 +549,11 @@ export const pageMeta = {
     description: "Six connected capabilities, built to work alone or as one integrated engine.",
     image: "/assets/nashwave-ocean.jpg",
   },
-  work: {
-    title: "Work",
+  products: {
+    title: "Products",
     description:
-      "Strategy, content, campaigns and digital products, all in one flow. See the work move.",
-    image: "/assets/nashwave-workspace.jpg",
+      "Websites, web apps, social pages and brands designed, built and run by Nashwave, including Essar Sons Group and Glass Optimizer.",
+    image: "/assets/products/essarsons-desktop.webp",
   },
   contact: {
     title: "Contact",
