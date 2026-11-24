@@ -1,0 +1,65 @@
+# Checks every pull request and every push to main.
+# Deploys are NOT done here: Cloudflare Workers Builds deploys main automatically.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Typecheck, build & link check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      WRANGLER_SEND_METRICS: "false"
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Cloudflare preview (wrangler dev)
+        run: |
+          npx wrangler dev --config dist/server/wrangler.json --port 3000 > wrangler.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:3000/ && exit 0
+            sleep 2
+          done
+          echo "Preview did not start:"; cat wrangler.log; exit 1
+
+      - name: Link check
+        run: npm run check:links
+
+      - name: Contact API smoke test
+        run: |
+          # Validation only: no email is sent (missing fields -> 400, honeypot -> 200).
+          code=$(curl -s -o /dev/null -w "%{http_code}" -F name=Test http://localhost:3000/api/contact)
+          [ "$code" = "400" ] || { echo "Expected 400 for missing fields, got $code"; exit 1; }
+          code=$(curl -s -o /dev/null -w "%{http_code}" -F bot-field=x http://localhost:3000/api/contact)
+          [ "$code" = "200" ] || { echo "Expected 200 for honeypot, got $code"; exit 1; }
+          echo "Contact API validation OK"
+
+      - name: Show preview log on failure
+        if: failure()
+        run: cat wrangler.log || true

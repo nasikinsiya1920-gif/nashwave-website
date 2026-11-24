@@ -37,3 +37,4 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Cloudflare Workers) —
 - Client components (`"use client"`) only where there is state, pointer/scroll logic or URL params: Header, MorphLogo, Hero, Tagline, Showreel, Approach (scroll-in + hover state for the process board), Testimonials, Contact, ContactFromParams.
 - Contact form POSTs `FormData` to `/api/contact`, which sends it with Resend using `RESEND_API_KEY` (secret), `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL`. Keep the field names (name, email, company, service, message, bot-field honeypot) in sync between `Contact.tsx` and the route.
 - Always run `npm run typecheck`, `npm run build`, and `npm run check:links` (against `npm run preview`) before pushing.
+- GitHub Actions (`.github/workflows/ci.yml`) runs the same checks on every PR and push to `main`; Cloudflare Workers Builds handles deploys. Keep the workflow in sync if scripts change.
