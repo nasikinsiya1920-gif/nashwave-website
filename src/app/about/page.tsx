@@ -9,7 +9,7 @@ export const metadata = pageMetadata({ ...pageMeta.about, path: routes.about });
 
 export default function AboutPage() {
   return (
-    <main className="overflow-hidden bg-sand text-ink">
+    <main className="overflow-x-clip bg-sand text-ink">
       <About asPage />
       <WhyUs count={reasons.length} />
       <Approach />

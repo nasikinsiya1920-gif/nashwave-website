@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { approachSection as copy, routes, steps } from "@/lib/content";
+import Reveal from "./Reveal";
 import { Label } from "./ui";
 
 /**
@@ -119,10 +120,18 @@ export default function Approach({ ctaHref = routes.contact }: { ctaHref?: strin
           <span suppressHydrationWarning>©{year}</span>
         </div>
 
-        <Label>{copy.label}</Label>
-        <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
-          <h2 className="process-title">{copy.title}</h2>
-          <p className="max-w-xs pb-4 text-base leading-7 text-ink/58">{copy.intro}</p>
+        <Reveal>
+          <Label>{copy.label}</Label>
+        </Reveal>
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+          <h2 className="display-title">
+            <Reveal as="span" variant="line">
+              {copy.title}
+            </Reveal>
+          </h2>
+          <Reveal as="p" delay={200} className="max-w-sm text-base leading-7 text-ink/58 lg:pb-2">
+            {copy.intro}
+          </Reveal>
         </div>
 
         <div
@@ -189,11 +198,8 @@ export default function Approach({ ctaHref = routes.contact }: { ctaHref?: strin
           <span aria-hidden="true" className="process-micro">
             {copy.cornerBottom}
           </span>
-          <Link
-            href={ctaHref}
-            className="inline-flex rounded-full bg-plum px-6 py-4 text-[10px] font-bold uppercase tracking-[.18em] text-white"
-          >
-            {copy.cta}
+          <Link href={ctaHref} className="btn-attention">
+            <span>{copy.cta}</span>
           </Link>
         </div>
       </div>

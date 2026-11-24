@@ -175,6 +175,79 @@
   color: var(--color-ink);
   background: white;
 }
+/* "Start with a conversation": an always-moving colour sweep (plum → coral) plus a soft pulse ring,
+   to pull the eye to this call to action. Static plum when reduced motion is on. */
+@layer components {
+  .btn-attention {
+    display: inline-flex;
+  }
+}
+.btn-attention {
+  position: relative;
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 16px 26px;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: linear-gradient(
+    110deg,
+    var(--color-plum) 0%,
+    var(--color-plum) 30%,
+    var(--color-coral) 50%,
+    var(--color-plum) 70%,
+    var(--color-plum) 100%
+  );
+  background-size: 300% 100%;
+  animation: attention-sweep 3.2s ease-in-out infinite;
+  transition: transform 0.25s;
+}
+.btn-attention::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-coral) 55%, transparent);
+  animation: attention-pulse 2.4s ease-out infinite;
+}
+.btn-attention:hover {
+  transform: translateY(-3px);
+  animation-play-state: paused;
+  background-position: 50% 0;
+}
+@keyframes attention-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+  60%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+@keyframes attention-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-coral) 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 16px color-mix(in srgb, var(--color-coral) 0%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-attention,
+  .btn-attention::after {
+    animation: none;
+  }
+  .btn-attention {
+    background: var(--color-plum);
+  }
+}
 .arrow-link {
   display: inline-flex;
   align-items: center;
@@ -200,27 +273,159 @@
 }
 
 /* ---------- Hero logo (scroll-morphs into the header) ---------- */
-.animated-hero-logo {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
+/* The box is the static wordmark (1200×334); the looping video is positioned inside it so its last
+   frame lines up with the wordmark. mix-blend-mode: screen on the whole logo makes the video's black
+   background disappear (it must sit on this outer fixed element: an inner element would only blend
+   with the logo's own transparent layer). --swap (0→1, set from JS) cross-fades video → wordmark. */
 .morph-logo {
+  --swap: 0;
   position: fixed;
   z-index: 45;
-  top: 43vh;
+  top: 45vh;
   left: 50%;
   display: block;
-  width: min(88vw, 1200px);
+  width: min(86vw, 1200px);
+  aspect-ratio: 1200 / 334;
   transform: translate(-50%, -50%);
-  transform-origin: top left;
   pointer-events: none;
+  mix-blend-mode: screen;
   will-change: top, left, width;
 }
 .morph-logo.is-docked {
   z-index: 60;
   pointer-events: auto;
+}
+.morph-logo-video {
+  position: absolute;
+  display: block;
+  opacity: calc(1 - var(--swap));
+}
+.morph-logo-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.morph-logo-static {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: var(--swap);
+}
+/* While the mobile menu is open the page behind it must not scroll. */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
+}
+
+/* ---------- Tagline: pinned "parting" scroll scene (homepage) ---------- */
+/* The section is taller than the screen; .tagline-pin sticks while it scrolls past.
+   --part (0→1) slides the two phrases out left/right, --reveal (0→1) brings the description in.
+   Both are written by Tagline.tsx from the scroll position. */
+.tagline-stage {
+  --part: 0;
+  --reveal: 0;
+  height: 280vh;
+}
+.tagline-pin {
+  position: sticky;
+  top: 0;
+  display: grid;
+  height: 100vh;
+  height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  padding: 76px 20px 0;
+}
+.tagline-pin > * {
+  grid-area: 1 / 1;
+}
+.tagline-split {
+  position: relative;
+  display: grid;
+  width: 100%;
+  font-size: clamp(1.75rem, min(10.4vw, 14vh), 5.5rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.tagline-half {
+  display: block;
+  opacity: calc(1 - var(--part) * 0.6);
+  will-change: transform;
+}
+/* Phones & tablets: two stacked lines, each slides fully off its side. */
+.tagline-half--left {
+  transform: translateX(calc(var(--part) * -110vw));
+}
+.tagline-half--right {
+  transform: translateX(calc(var(--part) * 110vw));
+}
+/* Wide screens: one line, parted exactly at the centre of the screen. */
+@media (min-width: 1024px) {
+  .tagline-split {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.2vw;
+    font-size: 5.7vw;
+    line-height: 1;
+  }
+  .tagline-half--left {
+    text-align: right;
+    transform: translateX(calc(var(--part) * -60vw));
+  }
+  .tagline-half--right {
+    text-align: left;
+    transform: translateX(calc(var(--part) * 60vw));
+  }
+}
+.tagline-cue {
+  align-self: end;
+  margin-bottom: 40px;
+  display: inline-flex;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: calc(1 - var(--part) * 3);
+}
+.tagline-reveal {
+  position: relative;
+  max-width: 760px;
+  text-align: center;
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * 60px));
+  pointer-events: none;
+}
+.tagline-reveal.is-revealed {
+  pointer-events: auto;
+}
+/* Keyboard users tabbing into the buttons always see them. */
+.tagline-reveal:focus-within {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tagline-stage {
+    height: auto;
+  }
+  .tagline-pin {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 48px;
+    padding: 120px 20px 80px;
+  }
+  .tagline-cue {
+    display: none;
+  }
 }
 
 /* ---------- Custom cursors ---------- */
@@ -264,7 +469,7 @@
   }
 }
 .tagline-dot-cursor {
-  position: absolute;
+  position: fixed;
   z-index: 40;
   width: 12px;
   height: 12px;
@@ -295,8 +500,8 @@
 }
 @media (max-width: 640px) {
   .morph-logo {
-    top: 40vh;
-    width: 92vw;
+    top: 42vh;
+    width: 88vw;
   }
 }
 
@@ -364,7 +569,53 @@
   }
 }
 
+/* ---------- Scroll reveal (Reveal.tsx) ---------- */
+.reveal {
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal--up {
+  opacity: 0;
+  transform: translateY(32px);
+}
+.reveal--line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders (g, y) inside the mask */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.reveal-line-inner {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 0.95s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.reveal.is-in .reveal-line-inner {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce), (scripting: none) {
+  .reveal,
+  .reveal-line-inner {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* ---------- Services ---------- */
+/* Two-line services heading: each line stays on one line ("Everything a brand" is the longest). */
+.services-title {
+  font-size: clamp(2rem, 9.2vw, 6.3rem);
+  white-space: nowrap;
+}
+
 .service-card {
   display: flex;
   min-height: 360px;
@@ -526,13 +777,6 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-.process-title {
-  margin-left: -0.05em;
-  font-size: clamp(5rem, 16vw, 15rem);
-  font-weight: 600;
-  line-height: 0.85;
-  letter-spacing: -0.065em;
 }
 .process-board {
   position: relative;
@@ -849,4 +1093,42 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* ---------- Footer: big looping logo + curtain reveal ---------- */
+/* .footer-logo is the full video frame (1920×364). The finished logo fills 61.1% of its width
+   (x 382–1555), so the frame is made 1.637× the logo width and shifted left to centre the logo;
+   the wave's tail enters from beyond the edge. --logo-w: the logo's width — the full container,
+   but smaller on short screens so the whole footer can still fit on screen for the curtain reveal. */
+.site-footer {
+  overflow-x: clip;
+}
+.footer-logo {
+  --logo-w: clamp(45%, calc((100vh - 580px) * 3.2), 100%);
+  display: block;
+  width: calc(var(--logo-w) * 1.637);
+  margin-left: calc((100% - var(--logo-w)) / 2 - var(--logo-w) * 0.3257);
+  aspect-ratio: 1920 / 364;
+}
+.footer-logo video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+}
+/* Curtain: the footer waits, pinned at the bottom behind the page; the page's last section lifts
+   away to reveal it. Only switched on (by FooterLogo) when the whole footer fits on screen. */
+/* overflow: clip (unlike hidden) still lets sections inside <main> use position: sticky. */
+html.footer-curtain body > main {
+  position: relative;
+  z-index: 1;
+  overflow: clip;
+  border-bottom-left-radius: clamp(24px, 4vw, 56px);
+  border-bottom-right-radius: clamp(24px, 4vw, 56px);
+  box-shadow: 0 40px 80px -30px rgba(6, 27, 36, 0.45);
+}
+html.footer-curtain .site-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
 }

@@ -1,25 +1,20 @@
-import Image from "next/image";
 import Link from "next/link";
-import { contactPeople, contacts, footerNav as copy, routes, services, site, ui } from "@/lib/content";
+import { contactPeople, contacts, footerNav as copy, routes, services, site } from "@/lib/content";
+import FooterLogo from "./FooterLogo";
 import { SocialLinks } from "./ui";
 
+/**
+ * Site footer: the big looping logo, then the links. On screens tall enough to show all of it,
+ * the page above lifts away like a curtain to reveal it (see FooterLogo and globals.css).
+ */
 export default function Footer() {
   return (
-    <footer className="bg-sand px-5 py-14 text-ink md:px-10 lg:px-16">
+    <footer className="site-footer bg-sand px-5 pb-10 pt-12 text-ink md:px-10 lg:px-16">
       <div className="mx-auto max-w-[1400px]">
-        <div className="grid gap-10 border-b border-plum/15 pb-12 md:grid-cols-2 lg:grid-cols-[1.2fr_1.2fr_.8fr_1fr]">
+        <FooterLogo />
+        <div className="grid gap-10 border-b border-plum/15 pb-10 pt-8 md:grid-cols-2 lg:grid-cols-[1.2fr_1.2fr_.8fr_1fr]">
           <div>
-            <Link href={routes.home} aria-label={ui.homeLogoLabel} className="inline-block">
-              <Image
-                src="/assets/nashwave-logo-purple.svg"
-                unoptimized
-                alt="Nashwave"
-                width={1200}
-                height={334}
-                className="h-auto w-[150px]"
-              />
-            </Link>
-            <p className="mt-5 max-w-xs text-xs leading-5 text-ink/50">{copy.blurb}</p>
+            <p className="max-w-xs text-sm leading-6 text-ink/55">{copy.blurb}</p>
           </div>
           <div className="footer-col">
             <b>{copy.servicesTitle}</b>

@@ -8,7 +8,7 @@ export const metadata = pageMetadata({ ...pageMeta.services, path: routes.servic
 
 export default function ServicesPage() {
   return (
-    <main className="overflow-hidden bg-sand text-ink">
+    <main className="overflow-x-clip bg-sand text-ink">
       <Services asPage />
       <Approach />
       <FinalCta />
