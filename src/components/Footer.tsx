@@ -13,10 +13,10 @@ export default function Footer() {
       <div className="mx-auto max-w-[1400px]">
         <FooterLogo />
         <div className="grid gap-10 border-b border-plum/15 pb-10 pt-8 md:grid-cols-2 lg:grid-cols-[1.2fr_1.2fr_.8fr_1fr]">
-          <div>
+          <div className="footer-reveal" style={{ "--d": "0ms" } as React.CSSProperties}>
             <p className="max-w-xs text-sm leading-6 text-ink/55">{copy.blurb}</p>
           </div>
-          <div className="footer-col">
+          <div className="footer-col footer-reveal" style={{ "--d": "90ms" } as React.CSSProperties}>
             <b>{copy.servicesTitle}</b>
             {services.map((s) => (
               <Link key={s.slug} href={routes.service(s.slug)}>
@@ -24,7 +24,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-          <div className="footer-col">
+          <div className="footer-col footer-reveal" style={{ "--d": "180ms" } as React.CSSProperties}>
             <b>{copy.companyTitle}</b>
             {copy.company.map(({ name, href }) => (
               <Link key={name} href={href}>
@@ -32,7 +32,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-          <div className="footer-col">
+          <div className="footer-col footer-reveal" style={{ "--d": "270ms" } as React.CSSProperties}>
             <b>{copy.connectTitle}</b>
             <a href={`mailto:${site.email}`}>{site.email}</a>
             {contacts.map((person) => (

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { aboutSection as copy, routes } from "@/lib/content";
+import ScrollWords from "./ScrollWords";
 import { Label, LinkArrow, PAGE_TOP, Title } from "./ui";
 import Reveal from "./Reveal";
 
@@ -7,14 +8,16 @@ import Reveal from "./Reveal";
 export default function About({ asPage = false }: { asPage?: boolean }) {
   return (
     <section id="about" className="relative overflow-hidden bg-sand-deep">
-      <Image
-        src="/assets/nashwave-white-wave-floor.png"
-        alt={copy.imageAlt}
-        fill
-        priority={asPage}
-        sizes="100vw"
-        className="object-cover object-center"
-      />
+      <div data-parallax="0.12" className="parallax-layer">
+        <Image
+          src="/assets/nashwave-white-wave-floor.png"
+          alt={copy.imageAlt}
+          fill
+          priority={asPage}
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(247,242,234,.98)_0%,rgba(247,242,234,.92)_35%,rgba(247,242,234,.2)_72%,rgba(247,242,234,.05)_100%)]" />
       <div
         className={`relative mx-auto max-w-[1400px] px-5 py-20 md:px-10 lg:px-16 lg:py-24 ${asPage ? PAGE_TOP : ""}`}
@@ -52,13 +55,9 @@ export default function About({ asPage = false }: { asPage?: boolean }) {
           <span className="flex h-12 w-fit min-w-12 items-center justify-center self-start whitespace-nowrap rounded-full border border-coral-soft/60 px-4 text-[10px] font-bold uppercase tracking-[0.15em] text-coral-soft">
             {copy.povTag}
           </span>
-          <Reveal
-            as="p"
-            delay={120}
-            className="max-w-5xl text-[clamp(2rem,4vw,4.4rem)] font-semibold leading-[0.96] tracking-[-0.05em]"
-          >
-            {copy.povLead} <span className="text-coral-soft">{copy.povAccent}</span>
-          </Reveal>
+          <p className="max-w-5xl text-[clamp(2rem,4vw,4.4rem)] font-semibold leading-[0.96] tracking-[-0.05em]">
+            <ScrollWords parts={[{ text: copy.povLead }, { text: copy.povAccent, className: "text-coral-soft" }]} />
+          </p>
         </div>
       </blockquote>
     </section>

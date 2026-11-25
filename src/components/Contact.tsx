@@ -67,102 +67,106 @@ export default function Contact({ asPage = false, serviceSlugs = [] }: { asPage?
                 <p className="mt-2 text-sm text-white/55">{copy.sentCopy}</p>
               </div>
             ) : (
-              <form name="contact" onSubmit={submit} className="mt-14 grid gap-x-5 gap-y-8 md:grid-cols-2">
-                <p hidden>
-                  <label>
-                    {copy.honeypot} <input name="bot-field" />
-                  </label>
-                </p>
-                <label className="field">
-                  <span>{copy.fields.name}</span>
-                  <input name="name" required autoComplete="name" />
-                </label>
-                <label className="field">
-                  <span>{copy.fields.email}</span>
-                  <input name="email" required type="email" autoComplete="email" />
-                </label>
-                <label className="field">
-                  <span>{copy.fields.company}</span>
-                  <input name="company" required autoComplete="organization" />
-                </label>
-                <div className="field">
-                  <label htmlFor="service-picker">
-                    <span>{copy.fields.service}</span>
-                  </label>
-                  {/* The picker has no name: the chosen services are submitted via the hidden input.
-                      It is `required` only while nothing is chosen, so the browser blocks an empty submit. */}
-                  <select
-                    id="service-picker"
-                    value=""
-                    required={selected.length === 0}
-                    disabled={available.length === 0}
-                    onChange={(e) => add(e.target.value)}
-                  >
-                    <option value="" disabled>
-                      {selected.length ? copy.fields.serviceAddAnother : copy.fields.servicePlaceholder}
-                    </option>
-                    {available.map((title) => (
-                      <option key={title} value={title}>
-                        {title}
-                      </option>
-                    ))}
-                  </select>
-                  <input type="hidden" name="service" value={selected.join(", ")} />
-                </div>
-                {selected.length > 0 && (
-                  <ul aria-label={copy.fields.serviceSelectedLabel} className="flex flex-wrap gap-2 md:col-span-2">
-                    {selected.map((title) => (
-                      <li key={title} className="service-chip">
-                        {title}
-                        <button
-                          type="button"
-                          onClick={() => remove(title)}
-                          aria-label={`${copy.fields.serviceRemove} ${title}`}
-                        >
-                          <span aria-hidden="true">×</span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <label className="field md:col-span-2">
-                  <span>{copy.fields.message}</span>
-                  <textarea name="message" required rows={4} />
-                </label>
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="btn-accent justify-self-start md:col-span-2"
-                >
-                  {status === "sending" ? copy.sending : copy.submit}
-                </button>
-                {status === "error" && (
-                  <p role="alert" className="text-sm text-coral-soft md:col-span-2">
-                    {copy.error} {site.email}.
+              <Reveal delay={300}>
+                <form name="contact" onSubmit={submit} className="mt-14 grid gap-x-5 gap-y-8 md:grid-cols-2">
+                  <p hidden>
+                    <label>
+                      {copy.honeypot} <input name="bot-field" />
+                    </label>
                   </p>
-                )}
-              </form>
+                  <label className="field">
+                    <span>{copy.fields.name}</span>
+                    <input name="name" required autoComplete="name" />
+                  </label>
+                  <label className="field">
+                    <span>{copy.fields.email}</span>
+                    <input name="email" required type="email" autoComplete="email" />
+                  </label>
+                  <label className="field">
+                    <span>{copy.fields.company}</span>
+                    <input name="company" required autoComplete="organization" />
+                  </label>
+                  <div className="field">
+                    <label htmlFor="service-picker">
+                      <span>{copy.fields.service}</span>
+                    </label>
+                    {/* The picker has no name: the chosen services are submitted via the hidden input.
+                      It is `required` only while nothing is chosen, so the browser blocks an empty submit. */}
+                    <select
+                      id="service-picker"
+                      value=""
+                      required={selected.length === 0}
+                      disabled={available.length === 0}
+                      onChange={(e) => add(e.target.value)}
+                    >
+                      <option value="" disabled>
+                        {selected.length ? copy.fields.serviceAddAnother : copy.fields.servicePlaceholder}
+                      </option>
+                      {available.map((title) => (
+                        <option key={title} value={title}>
+                          {title}
+                        </option>
+                      ))}
+                    </select>
+                    <input type="hidden" name="service" value={selected.join(", ")} />
+                  </div>
+                  {selected.length > 0 && (
+                    <ul aria-label={copy.fields.serviceSelectedLabel} className="flex flex-wrap gap-2 md:col-span-2">
+                      {selected.map((title) => (
+                        <li key={title} className="service-chip">
+                          {title}
+                          <button
+                            type="button"
+                            onClick={() => remove(title)}
+                            aria-label={`${copy.fields.serviceRemove} ${title}`}
+                          >
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <label className="field md:col-span-2">
+                    <span>{copy.fields.message}</span>
+                    <textarea name="message" required rows={4} />
+                  </label>
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="btn-accent justify-self-start md:col-span-2"
+                  >
+                    {status === "sending" ? copy.sending : copy.submit}
+                  </button>
+                  {status === "error" && (
+                    <p role="alert" className="text-sm text-coral-soft md:col-span-2">
+                      {copy.error} {site.email}.
+                    </p>
+                  )}
+                </form>
+              </Reveal>
             )}
           </div>
-          <aside className="border-t border-white/15 pt-8 lg:border-l lg:border-t-0 lg:pl-12">
-            <span className="text-[10px] font-bold uppercase tracking-[.2em] text-white/40">{copy.asideTitle}</span>
-            <a href={`mailto:${site.email}`} className="mt-9 block text-2xl font-semibold text-coral-soft">
-              {site.email}
-            </a>
-            <DirectContacts />
-            <SocialLinks className="mt-12 flex gap-6 text-[10px] font-bold uppercase tracking-[.17em] text-white/60" />
-            <div className="mt-20 rounded-[2rem] bg-plum p-8">
-              <Image
-                src="/assets/nashwave-wave-white.svg"
-                unoptimized
-                alt=""
-                width={298}
-                height={142}
-                className="mb-20 h-auto w-28 opacity-70"
-              />
-              <p className="text-xl font-semibold">{copy.cardLine}</p>
-            </div>
-          </aside>
+          <Reveal delay={200}>
+            <aside className="h-full border-t border-white/15 pt-8 lg:border-l lg:border-t-0 lg:pl-12">
+              <span className="text-[10px] font-bold uppercase tracking-[.2em] text-white/40">{copy.asideTitle}</span>
+              <a href={`mailto:${site.email}`} className="mt-9 block text-2xl font-semibold text-coral-soft">
+                {site.email}
+              </a>
+              <DirectContacts />
+              <SocialLinks className="mt-12 flex gap-6 text-[10px] font-bold uppercase tracking-[.17em] text-white/60" />
+              <div className="mt-20 rounded-[2rem] bg-plum p-8">
+                <Image
+                  src="/assets/nashwave-wave-white.svg"
+                  unoptimized
+                  alt=""
+                  width={298}
+                  height={142}
+                  className="mb-20 h-auto w-28 opacity-70"
+                />
+                <p className="text-xl font-semibold">{copy.cardLine}</p>
+              </div>
+            </aside>
+          </Reveal>
         </div>
       </div>
     </section>

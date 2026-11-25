@@ -50,7 +50,7 @@ export default function FooterLogo() {
   }, []);
 
   return (
-    <Link ref={linkRef} href={routes.home} aria-label={ui.homeLogoLabel} className="footer-logo">
+    <Link ref={linkRef} href={routes.home} aria-label={ui.homeLogoLabel} className="footer-logo footer-reveal">
       <video
         ref={videoRef}
         poster="/assets/video/nashwave-logo-light-poster.webp"

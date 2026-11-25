@@ -434,14 +434,15 @@ export const showreelSection = {
 };
 
 /**
- * The looping video shown right after "Turn the Tide" on the homepage.
- * TODO: add the video. Put the files in public/assets/video/ and fill in the paths; while both
- * sources are empty the section is hidden. Keep each file under 25 MB (Cloudflare's per-file limit).
+ * The looping video shown right after "Turn the Tide" on the homepage (60 s brand film with sound).
+ * Files live in public/assets/video/. While both sources are empty the section is hidden.
+ * Keep each file under 25 MB (Cloudflare's per-file limit); ~10 MB loads well on phones.
+ * The MP4 (H.264 + AAC) plays in every current browser, so no WebM is needed for this one.
  */
 export const featureVideo = {
   webm: "",
-  mp4: "",
-  poster: "",
+  mp4: "/assets/video/nashwave-intro.mp4",
+  poster: "/assets/video/nashwave-intro-poster.webp",
   label: "Nashwave video",
   playSound: "Play sound",
   soundOff: "Sound off",

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Sora } from "next/font/google";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ScrollFx from "@/components/ScrollFx";
 import { site } from "@/lib/content";
 import "./globals.css";
 
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${dmSans.variable} ${sora.variable}`}>
       <body>
+        <ScrollFx />
         <Header />
         {children}
         <Footer />

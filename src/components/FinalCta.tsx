@@ -14,7 +14,9 @@ export default function FinalCta({
 }) {
   return (
     <section className="relative flex min-h-[720px] items-center justify-center overflow-hidden bg-deep px-5 py-24 text-center text-white">
-      <Image src="/assets/nashwave-ocean.jpg" alt="" fill sizes="100vw" className="object-cover opacity-40" />
+      <div data-parallax="0.2" className="parallax-layer">
+        <Image src="/assets/nashwave-ocean.jpg" alt="" fill sizes="100vw" className="object-cover opacity-40" />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-deep/80 via-[#0A3842]/60 to-plum/70" />
       <div className="relative max-w-5xl">
         <div className="flex justify-center">
