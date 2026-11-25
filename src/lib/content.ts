@@ -441,7 +441,8 @@ export const showreelSection = {
  */
 export const featureVideo = {
   webm: "",
-  mp4: "/assets/video/nashwave-intro.mp4",
+  // Videos are linked via /video/<file> (byte-range route for Safari), files live in public/assets/video/.
+  mp4: "/video/nashwave-intro.mp4",
   poster: "/assets/video/nashwave-intro-poster.webp",
   label: "Nashwave video",
   playSound: "Play sound",
