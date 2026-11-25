@@ -433,6 +433,21 @@ export const showreelSection = {
   comingSoonNote: "Replace this placeholder with the final 45–60 second production reel.",
 };
 
+/**
+ * The looping video shown right after "Turn the Tide" on the homepage.
+ * TODO: add the video. Put the files in public/assets/video/ and fill in the paths; while both
+ * sources are empty the section is hidden. Keep each file under 25 MB (Cloudflare's per-file limit).
+ */
+export const featureVideo = {
+  webm: "",
+  mp4: "",
+  poster: "",
+  label: "Nashwave video",
+  playSound: "Play sound",
+  soundOff: "Sound off",
+  playVideo: "Play video",
+};
+
 export const aboutSection = {
   label: "Who we are",
   titleLine1: "Your digital",

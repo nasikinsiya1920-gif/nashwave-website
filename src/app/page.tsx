@@ -2,6 +2,7 @@ import About from "@/components/About";
 import Approach from "@/components/Approach";
 import Audience from "@/components/Audience";
 import Contact from "@/components/Contact";
+import FeatureVideo from "@/components/FeatureVideo";
 import FinalCta from "@/components/FinalCta";
 import Hero from "@/components/Hero";
 import MorphLogo from "@/components/MorphLogo";
@@ -16,6 +17,7 @@ export default function Home() {
       <MorphLogo />
       <Hero />
       <Tagline />
+      <FeatureVideo />
       {/* "See the work move" showreel is hidden for now — re-add <Showreel /> here (and its import) to show it. */}
       <About />
       <Services showAllLink />
