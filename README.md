@@ -25,7 +25,7 @@ npm run check:links    # crawl every page of the running site for broken links (
 | Home | `/` |
 | About (incl. approach) | `/about`, `/about#approach` |
 | Services overview | `/services` |
-| Service detail (×6) | `/services/brand-creative`, `/services/media-content-production`, `/services/social-community`, `/services/websites-digital-products`, `/services/web-apps-data-automation`, `/services/brand-assets-design` |
+| Service detail (×4) | `/services/logo-branding`, `/services/social-media`, `/services/websites`, `/services/digital-solutions` (the six older service addresses redirect to these) |
 | Products | `/products` (the old `/work` address redirects here) |
 | Contact | `/contact` (add `?service=<slug>` to pre-select a service) |
 | Privacy / Terms | `/privacy`, `/terms` |
@@ -40,7 +40,8 @@ Almost everything is edited in **`src/lib/content.ts`** — the pages read from 
 | Directors' names, roles, phone & WhatsApp numbers | `contacts` |
 | Navigation & footer links | `routes`, `navLinks`, `footerNav` |
 | Services (title, description, "What's included", URL slug) | `services` |
-| "Why Us" reasons (homepage shows the first 3, /about all 6) | `reasons` |
+| "Why Nashwave" reasons (homepage shows the first 3, /about all 6) | `reasons` |
+| "Who we work with" (founders, shop owners, manufacturers, speakers…) | `audienceSection` |
 | Approach steps | `steps` |
 | Client names, testimonials | `clients`, `quotes` |
 | Products page: categories, projects, screenshots | `productCategories`, `productsPage` (screenshots in `public/assets/products/`) |

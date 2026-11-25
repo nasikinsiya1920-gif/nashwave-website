@@ -13,9 +13,9 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Cloudflare Workers) —
 ## Pages (`src/app/`)
 | Route | File | Built from |
 |---|---|---|
-| `/` | `page.tsx` | MorphLogo, Hero, Tagline, About, Services, WhyUs (3), Approach, Contact, FinalCta |
-| `/about` | `about/page.tsx` | About (asPage), WhyUs (all 6), Approach, FinalCta |
-| `/services` | `services/page.tsx` | Services (asPage), Approach, FinalCta |
+| `/` | `page.tsx` | MorphLogo, Hero, Tagline, About, Services, Audience, WhyUs (3), Approach, Contact, FinalCta |
+| `/about` | `about/page.tsx` | About (asPage), Audience, WhyUs (all 6), Approach, FinalCta |
+| `/services` | `services/page.tsx` | Services (asPage), Audience, Approach, FinalCta |
 | `/services/[slug]` | `services/[slug]/page.tsx` | ServiceHero, ServiceIncludes, Approach, WhyUs (3), Testimonials (single), Services (others), FinalCta |
 | `/products` | `products/page.tsx` | Products (intro + one section per `productCategories` entry), FinalCta. `/work` 308-redirects here (`next.config.ts`) |
 | `/contact` | `contact/page.tsx` | Contact (asPage) via ContactFromParams in `<Suspense>` (reads `?service=<slug>`) |
@@ -24,6 +24,7 @@ Marketing site for Nashwave (nashwavetech.com, hosted on Cloudflare Workers) —
 | 404 | `not-found.tsx` | Unknown URLs and unknown service slugs (`dynamicParams = false`) |
 
 ## Conventions
+- **Voice:** Nashwave is a *digital growth partner* for founders and business owners (small industrialists, shop owners, women founders, coaches/speakers, startup founders). Write direct, concrete copy around the four services (Logo & Branding, Social Media, Website Building, Digital Solutions) — no abstract metaphors.
 - **All copy lives in `src/lib/content.ts`** — page and component files never contain text. Section copy is in `*Section` objects, page SEO in `pageMeta`, small UI strings in `ui`.
 - Routes come from `routes` / `navLinks` / `footerNav` in content.ts. Use `next/link` for internal links; never `href="#"`.
 - Section components take props (`asPage`, `count`, `items`, `ctaHref`, …) so the homepage and inner pages render the same components. `asPage` makes the section's heading an `h1` and adds `PAGE_TOP` padding to clear the fixed header.

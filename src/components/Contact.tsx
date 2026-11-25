@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 import { contactSection as copy, getService, services, site } from "@/lib/content";
 import DirectContacts from "./DirectContacts";
 import { Label, PAGE_TOP, SocialLinks, Title } from "./ui";
+import Reveal from "./Reveal";
 
 /**
  * Contact form. Submissions are POSTed to /api/contact (src/app/api/contact/route.ts),
@@ -14,13 +15,7 @@ import { Label, PAGE_TOP, SocialLinks, Title } from "./ui";
  *
  * `serviceSlugs` pre-selects services (used by /contact?service=<slug> or ?service=<slug>,<slug>).
  */
-export default function Contact({
-  asPage = false,
-  serviceSlugs = [],
-}: {
-  asPage?: boolean;
-  serviceSlugs?: string[];
-}) {
+export default function Contact({ asPage = false, serviceSlugs = [] }: { asPage?: boolean; serviceSlugs?: string[] }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [selected, setSelected] = useState<string[]>(() =>
     serviceSlugs.map((slug) => getService(slug)?.title).filter((t): t is string => Boolean(t)),
@@ -49,20 +44,25 @@ export default function Contact({
       className={`scroll-mt-20 bg-ink px-5 py-24 text-white md:px-10 lg:px-16 lg:py-36 ${asPage ? PAGE_TOP : ""}`}
     >
       <div className="mx-auto max-w-[1400px]">
-        <Label light>{copy.label}</Label>
+        <Reveal>
+          <Label light>{copy.label}</Label>
+        </Reveal>
         <div className="grid gap-16 lg:grid-cols-[1.3fr_.7fr]">
           <div>
             <Title asPage={asPage}>
-              {copy.titleLine1}
-              <br />
-              {copy.titleLine2}
+              <Reveal as="span" variant="line">
+                {copy.titleLine1}
+              </Reveal>
+              <Reveal as="span" variant="line" delay={110}>
+                {copy.titleLine2}
+              </Reveal>
             </Title>
-            <p className="mt-8 max-w-xl text-base leading-7 text-white/55">{copy.intro}</p>
+            <Reveal as="p" delay={220} className="mt-8 max-w-xl text-base leading-7 text-white/60">
+              {copy.intro}
+            </Reveal>
             {status === "sent" ? (
               <div role="status" className="mt-14 border border-coral/40 bg-coral/10 p-8">
-                <span className="text-[10px] font-bold uppercase tracking-[.2em] text-coral-soft">
-                  {copy.sentTag}
-                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[.2em] text-coral-soft">{copy.sentTag}</span>
                 <p className="mt-4 text-2xl font-semibold">{copy.sentTitle}</p>
                 <p className="mt-2 text-sm text-white/55">{copy.sentCopy}</p>
               </div>
@@ -145,9 +145,7 @@ export default function Contact({
             )}
           </div>
           <aside className="border-t border-white/15 pt-8 lg:border-l lg:border-t-0 lg:pl-12">
-            <span className="text-[10px] font-bold uppercase tracking-[.2em] text-white/40">
-              {copy.asideTitle}
-            </span>
+            <span className="text-[10px] font-bold uppercase tracking-[.2em] text-white/40">{copy.asideTitle}</span>
             <a href={`mailto:${site.email}`} className="mt-9 block text-2xl font-semibold text-coral-soft">
               {site.email}
             </a>

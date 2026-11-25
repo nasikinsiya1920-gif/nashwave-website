@@ -1,5 +1,6 @@
 import About from "@/components/About";
 import Approach from "@/components/Approach";
+import Audience from "@/components/Audience";
 import Contact from "@/components/Contact";
 import FinalCta from "@/components/FinalCta";
 import Hero from "@/components/Hero";
@@ -18,6 +19,7 @@ export default function Home() {
       {/* "See the work move" showreel is hidden for now — re-add <Showreel /> here (and its import) to show it. */}
       <About />
       <Services showAllLink />
+      <Audience ctaHref="#contact" />
       <WhyUs count={3} />
       <Approach ctaHref="#contact" />
       {/* "Brands that chose to move with us" (ClientLogos + Testimonials) is hidden on the homepage
