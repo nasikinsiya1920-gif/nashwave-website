@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { quotes, ui } from "@/lib/content";
 import { PlaceholderTag } from "./ui";
+import Reveal from "./Reveal";
 
 /**
  * Testimonial quote. With `single`, shows one fixed quote (no controls);
@@ -24,22 +25,24 @@ export default function Testimonials({
   return (
     <section className={className}>
       <div className="mx-auto grid max-w-[1400px] items-end gap-10 px-5 md:px-10 lg:grid-cols-[1fr_auto] lg:px-16">
-        <figure aria-live={single ? undefined : "polite"}>
-          {quote.placeholder && (
-            <div className="mb-6">
-              <PlaceholderTag>{ui.sampleTestimonial}</PlaceholderTag>
-            </div>
-          )}
-          <span aria-hidden="true" className="text-7xl text-coral">
-            “
-          </span>
-          <blockquote className="max-w-4xl text-3xl font-semibold leading-[1.08] tracking-[-.04em] md:text-5xl">
-            {quote.text}
-          </blockquote>
-          <figcaption className="mt-8 text-xs font-bold uppercase tracking-[.16em] text-plum">
-            {quote.author} — <span className="text-ink/40">{quote.role}</span>
-          </figcaption>
-        </figure>
+        <Reveal>
+          <figure aria-live={single ? undefined : "polite"}>
+            {quote.placeholder && (
+              <div className="mb-6">
+                <PlaceholderTag>{ui.sampleTestimonial}</PlaceholderTag>
+              </div>
+            )}
+            <span aria-hidden="true" className="text-7xl text-coral">
+              “
+            </span>
+            <blockquote className="max-w-4xl text-3xl font-semibold leading-[1.08] tracking-[-.04em] md:text-5xl">
+              {quote.text}
+            </blockquote>
+            <figcaption className="mt-8 text-xs font-bold uppercase tracking-[.16em] text-plum">
+              {quote.author} — <span className="text-ink/40">{quote.role}</span>
+            </figcaption>
+          </figure>
+        </Reveal>
         {!single && quotes.length > 1 && (
           <div className="flex gap-2">
             <button

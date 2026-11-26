@@ -50,7 +50,7 @@ export default function FooterLogo() {
   }, []);
 
   return (
-    <Link ref={linkRef} href={routes.home} aria-label={ui.homeLogoLabel} className="footer-logo">
+    <Link ref={linkRef} href={routes.home} aria-label={ui.homeLogoLabel} className="footer-logo footer-reveal">
       <video
         ref={videoRef}
         poster="/assets/video/nashwave-logo-light-poster.webp"
@@ -62,8 +62,8 @@ export default function FooterLogo() {
         tabIndex={-1}
         aria-hidden="true"
       >
-        <source src="/assets/video/nashwave-logo-light.webm" type="video/webm" />
-        <source src="/assets/video/nashwave-logo-light.mp4" type="video/mp4" />
+        <source src="/video/nashwave-logo-light.webm" type="video/webm" />
+        <source src="/video/nashwave-logo-light.mp4" type="video/mp4" />
       </video>
     </Link>
   );

@@ -5,8 +5,8 @@ import { Label, LinkArrow, PAGE_TOP, Title } from "./ui";
 
 /**
  * Grid of service cards, each linking to its detail page.
- * Homepage: all 6 + "Explore all services". /services: all 6 as the page opener.
- * Service detail: the other 5 under a different heading.
+ * Homepage: all 4 + "See all services". /services: all 4 as the page opener.
+ * Service detail: the other 3 under a different heading.
  * The title can be one string or an array of lines (each line stays on one line). Text and cards
  * reveal as they scroll into view.
  */
@@ -49,9 +49,11 @@ export default function Services({
             </Reveal>
           )}
         </div>
-        <div className="grid border-l border-t border-plum/15 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          className={`grid border-l border-t border-plum/15 md:grid-cols-2 ${items.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}
+        >
           {items.map(({ slug, number, title: serviceTitle, copy }, i) => (
-            <Reveal key={slug} delay={(i % 3) * 90} className="flex">
+            <Reveal key={slug} delay={(i % 4) * 90} className="flex">
               <article className="service-card group w-full">
                 <span className="text-[10px] font-bold tracking-[.2em] text-coral">{number}</span>
                 <div>

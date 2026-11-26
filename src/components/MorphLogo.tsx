@@ -117,8 +117,8 @@ export default function MorphLogo() {
           disablePictureInPicture
           tabIndex={-1}
         >
-          <source src="/assets/video/nashwave-logo-dark.webm" type="video/webm" />
-          <source src="/assets/video/nashwave-logo-dark.mp4" type="video/mp4" />
+          <source src="/video/nashwave-logo-dark.webm" type="video/webm" />
+          <source src="/video/nashwave-logo-dark.mp4" type="video/mp4" />
         </video>
       </span>
       <Image

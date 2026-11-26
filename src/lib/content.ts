@@ -8,9 +8,9 @@
 export const site = {
   name: "Nashwave",
   url: "https://nashwavetech.com",
-  title: "Nashwave | Media Marketing & Digital Solutions — Turn the Tide. Move the Business.",
+  title: "Nashwave | Your Digital Growth Partner: Branding, Social Media, Websites & Digital Solutions",
   description:
-    "Nashwave is a media marketing and digital solutions company that turns business challenges and digital shifts into momentum through creativity and technology.",
+    "Nashwave is a digital growth partner for founders and business owners. We turn your business into a recognisable brand, run your social media, build your website and set up the digital tools that keep it running smoothly.",
   tagline: "Turn the Tide. Move the Business.",
   email: "sales@nashwavetech.com",
   /** TODO: full profile URLs. Any link left empty is hidden everywhere on the site. */
@@ -88,7 +88,7 @@ export const routes = {
   approach: "/about#approach",
   services: "/services",
   service: (slug: string) => `/services/${slug}`,
-  work: "/work",
+  products: "/products",
   contact: "/contact",
   contactFor: (slug: string) => `/contact?service=${slug}`,
   privacy: "/privacy",
@@ -100,7 +100,7 @@ export const navLinks = [
   { name: "About", href: routes.about, match: routes.about },
   { name: "Services", href: routes.services, match: routes.services },
   { name: "Approach", href: routes.approach, match: null },
-  { name: "Work", href: routes.work, match: routes.work },
+  { name: "Products", href: routes.products, match: routes.products },
 ];
 
 export const footerNav = {
@@ -110,10 +110,10 @@ export const footerNav = {
   company: [
     { name: "About", href: routes.about },
     { name: "Approach", href: routes.approach },
-    { name: "Work", href: routes.work },
+    { name: "Products", href: routes.products },
     { name: "Contact", href: routes.contact },
   ],
-  blurb: "Media, marketing and digital solutions that turn change into momentum.",
+  blurb: "Your digital growth partner: logo and branding, social media, websites and digital solutions, from one team.",
   rights: "Nashwave. All rights reserved.",
   privacy: "Privacy",
   terms: "Terms",
@@ -125,7 +125,7 @@ export const ui = {
   mobileContact: "Contact",
   toggleNav: "Toggle navigation",
   homeLogoLabel: "Nashwave home",
-  learnMore: "Learn more →",
+  learnMore: "See what's included →",
   learnMoreLabel: "Learn more about",
   breadcrumbHome: "Home",
   breadcrumbServices: "Services",
@@ -143,46 +143,59 @@ export const ui = {
 
 export const services = [
   {
-    slug: "brand-creative",
+    slug: "logo-branding",
     number: "01",
-    title: "Brand & Creative",
-    copy: "Brand identity, positioning, messaging and creative direction that make you impossible to confuse with anyone else.",
-    includes: ["Brand identity", "Positioning", "Messaging", "Creative direction"],
+    title: "Logo & Branding",
+    copy: "A logo, colours, fonts and a voice that make your business instantly recognisable, and give it a personality your customers connect with.",
+    includes: [
+      "Logo design",
+      "Brand colours and fonts",
+      "Brand voice and key messages",
+      "Brand guidelines",
+      "Visiting cards, packaging and print",
+      "Brochures, catalogues and presentations",
+    ],
   },
   {
-    slug: "media-content-production",
+    slug: "social-media",
     number: "02",
-    title: "Media & Content Production",
-    copy: "Video, photography, motion graphics and campaign content, produced end to end.",
-    includes: ["Video", "Photography", "Motion graphics", "Campaign content"],
+    title: "Social Media",
+    copy: "We plan, shoot, design and post content that builds your presence online, grows your following and turns followers into customers.",
+    includes: [
+      "Instagram, Facebook and LinkedIn pages",
+      "Monthly content plan",
+      "Posts, reels and photo or video shoots",
+      "Captions and hashtags",
+      "Replying to comments and messages",
+      "Monthly results report",
+    ],
   },
   {
-    slug: "social-community",
+    slug: "websites",
     number: "03",
-    title: "Social & Community",
-    copy: "Social strategy, content calendars, influencer collaborations and community management.",
-    includes: ["Social strategy", "Content calendars", "Influencer collaborations", "Community management"],
+    title: "Website Building",
+    copy: "Fast, mobile-friendly websites that explain what you do in seconds, show your work and turn visitors into enquiries.",
+    includes: [
+      "Business websites",
+      "Landing pages for offers and launches",
+      "Online catalogues",
+      "Enquiry and WhatsApp buttons",
+      "Google search basics",
+      "Domain, hosting and business email setup",
+    ],
   },
   {
-    slug: "websites-digital-products",
+    slug: "digital-solutions",
     number: "04",
-    title: "Websites & Digital Products",
-    copy: "Fast, beautiful websites, landing pages and apps built to convert.",
-    includes: ["Websites", "Landing pages", "Apps"],
-  },
-  {
-    slug: "web-apps-data-automation",
-    number: "05",
-    title: "Web Apps, Data, Automation & Insight",
-    copy: "Custom web apps, analytics, tracking, CRM integrations and automated workflows that make operations clearer, faster and easier to scale.",
-    includes: ["Custom web apps", "Analytics", "Tracking", "CRM integrations", "Automated workflows"],
-  },
-  {
-    slug: "brand-assets-design",
-    number: "06",
-    title: "Brand Assets Design",
-    copy: "Custom digital assets including emails, reminders, decks, plans and catalogues, plus practical print-ready designs shaped around your business.",
-    includes: ["Emails", "Reminders", "Decks", "Plans", "Catalogues", "Print-ready designs"],
+    title: "Digital Solutions",
+    copy: "Custom web apps and automations that replace spreadsheets, paperwork and repeated work, so your business runs smoothly and you save time every day.",
+    includes: [
+      "Custom web apps for your business",
+      "Quotes, orders, stock and billing tools",
+      "Automatic reminders, emails and WhatsApp messages",
+      "Dashboards and reports",
+      "Ready products like our Glass Optimizer",
+    ],
   },
 ];
 
@@ -197,56 +210,56 @@ export const getService = (slug: string) => services.find((s) => s.slug === slug
 /** The homepage shows the first 3; /about shows all 6. */
 export const reasons = [
   {
-    title: "Momentum over noise.",
-    copy: "Every idea is tied to a business outcome, so effort turns into movement.",
+    title: "One team for everything.",
+    copy: "Logo, social media, website and business tools from one team, so your brand looks and sounds the same everywhere.",
   },
   {
-    title: "Creativity with a commercial spine.",
-    copy: "Bold ideas, always checked against your goals and your budget.",
+    title: "We make you recognisable.",
+    copy: "Every logo, post and page builds one clear personality that customers remember and come back to.",
   },
   {
-    title: "Technology-fluent.",
-    copy: "We build, automate and measure, so strategy and execution never drift apart.",
+    title: "Built for growing businesses.",
+    copy: "We work with shop owners, manufacturers, founders and speakers, and size the work to your stage and budget.",
   },
   {
-    title: "One integrated team.",
-    copy: "Media, marketing and digital under one roof, with no hand-off gaps.",
+    title: "Plain talk, clear updates.",
+    copy: "No jargon. You always know what we are doing, when it will be ready and what it is achieving.",
   },
   {
-    title: "Built for change.",
-    copy: "We treat digital shifts as openings, and move fast when the market does.",
+    title: "Results you can see.",
+    copy: "More enquiries, more followers, smoother operations: we track the numbers that matter to your business.",
   },
   {
-    title: "Clear, honest partnership.",
-    copy: "Transparent reporting, plain language and no surprises.",
+    title: "We build tools too.",
+    copy: "When spreadsheets and paperwork slow you down, we build simple apps that save hours, like our Glass Optimizer.",
   },
 ];
 
 export const steps = [
   {
     title: "Discover",
-    eyebrow: "Nice to meet you",
-    copy: "We listen first: your business, audience, market and what is holding you back.",
+    eyebrow: "We listen first",
+    copy: "A conversation about your business, your customers, your goals and what is holding you back.",
   },
   {
-    title: "Strategise",
-    eyebrow: "It all starts with a plan",
-    copy: "We turn insight into a clear plan: positioning, channels, goals and measurement.",
+    title: "Plan",
+    eyebrow: "A clear plan",
+    copy: "We decide together what you need first (brand, social media, website or tools) and agree the timeline.",
   },
   {
     title: "Create",
-    eyebrow: "Let's get creative",
-    copy: "Our creative and tech teams produce the content, design and digital experiences.",
+    eyebrow: "We build it",
+    copy: "We design your brand, produce your content and build your website or app, sharing progress as we go.",
   },
   {
-    title: "Activate",
-    eyebrow: "Showtime",
-    copy: "We launch across the right channels, at the right moment, with the right message.",
+    title: "Launch",
+    eyebrow: "Go live",
+    copy: "Everything goes live together, so your brand looks and sounds the same on every channel.",
   },
   {
-    title: "Optimise",
-    eyebrow: "Again, but better",
-    copy: "We track, test and refine, so every cycle performs better than the last.",
+    title: "Grow",
+    eyebrow: "Keep improving",
+    copy: "We track enquiries, followers and results, and keep improving every month.",
   },
 ];
 
@@ -282,20 +295,106 @@ export const quotes = [
   },
 ];
 
-export type CaseStudy = {
-  title: string;
-  client: string;
-  /** Slug of the related service, e.g. "brand-creative". */
-  service: string;
-  summary: string;
-  /** Image path under /public, e.g. "/assets/case-acme.jpg". */
-  image: string;
-  /** Optional link to a full write-up. */
-  href?: string;
+/* ------------------------------------------------------------------ */
+/* Products (/products): what we've built and run, grouped by service  */
+/* ------------------------------------------------------------------ */
+
+export type ProductItem = {
+  name: string;
+  /** Public address, shown and linked as "Visit". Leave empty to hide the link. */
+  url: string;
+  /** Short label for the address, e.g. "essarsons.com" or "@handle". */
+  urlLabel: string;
+  /** Text for the main button (defaults to "Visit <urlLabel>"). */
+  visitLabel?: string;
+  description: string;
+  tags: string[];
+  /** Screenshots under /public. desktop: 1440×900, phone: 585×996. */
+  images: { desktop?: string; phone?: string; gallery?: string[] };
+  /** Extra buttons, e.g. a free trial. */
+  ctas?: { label: string; href: string }[];
 };
 
-/** TODO: add case studies here. While empty, /work shows a "Case studies coming soon" placeholder. */
-export const caseStudies: CaseStudy[] = [];
+export type ProductCategory = {
+  /** Anchor id, e.g. "website-design" → /products#website-design */
+  id: string;
+  title: string;
+  intro: string;
+  /** Slug of the related service page. */
+  service: string;
+  /** "showcase": browser + phone mockups. "profiles": social profile cards. "gallery": brand images. */
+  layout: "showcase" | "profiles" | "gallery";
+  /** A category with no items is hidden everywhere on the page. */
+  items: ProductItem[];
+};
+
+export const productCategories: ProductCategory[] = [
+  {
+    id: "website-design",
+    title: "Website design",
+    intro: "Websites that explain what a business does in seconds and turn visitors into enquiries.",
+    service: "websites",
+    layout: "showcase",
+    items: [
+      {
+        name: "Essar Sons Group",
+        url: "https://essarsons.com",
+        urlLabel: "essarsons.com",
+        description:
+          "A multi-page website for a group of glass, aluminium and construction businesses established 40 years ago: each division and firm, real project stories, client logos, and enquiries sent straight to the team by email.",
+        tags: ["Website design", "Development", "Enquiry forms"],
+        images: {
+          desktop: "/assets/products/essarsons-desktop.webp",
+          phone: "/assets/products/essarsons-phone.webp",
+        },
+      },
+    ],
+  },
+  {
+    id: "web-apps",
+    title: "Web apps",
+    intro:
+      "We build custom web apps around how a business really works. Glass Optimizer is one of them: our own product for glass shops.",
+    service: "digital-solutions",
+    layout: "showcase",
+    items: [
+      {
+        name: "Glass Optimizer",
+        url: "https://optimizer.nashwavetech.com",
+        urlLabel: "optimizer.nashwavetech.com",
+        description:
+          "A sheet-cutting optimiser for glass processors. Enter the sheet and piece sizes and it works out the exact cutting layout with the least wastage, with yield, offcuts, Excel export and printable piece labels.",
+        tags: ["Web app", "SaaS", "Free 3-day trial"],
+        images: {
+          desktop: "/assets/products/optimizer-desktop.webp",
+          phone: "/assets/products/optimizer-phone.webp",
+        },
+        visitLabel: "Start a free 3-day trial",
+      },
+    ],
+  },
+  {
+    id: "social-media",
+    title: "Social media",
+    intro: "Pages we plan, shoot, post and manage every day for our clients.",
+    service: "social-media",
+    layout: "profiles",
+    // TODO: add Radhika's and Sneha's Instagram pages (name, @handle, profile URL, profile screenshot).
+    items: [],
+  },
+  {
+    id: "branding",
+    title: "Branding",
+    intro: "Logos and brand identities, with the colours, fonts and rules that keep them consistent everywhere.",
+    service: "logo-branding",
+    layout: "gallery",
+    // TODO: add the SR branding project (images from the brand guideline under /public/assets/products/).
+    items: [],
+  },
+];
+
+/** Categories that have something to show (empty ones are hidden). */
+export const liveProductCategories = productCategories.filter((c) => c.items.length > 0);
 
 
 /* ------------------------------------------------------------------ */
@@ -303,18 +402,18 @@ export const caseStudies: CaseStudy[] = [];
 /* ------------------------------------------------------------------ */
 
 export const heroSection = {
-  eyebrow: "Media · Marketing · Digital Solutions",
-  cursorWords: ["Brand", "Strategy", "Apps", "Digital", "Solutions", "Growth", "Brand", "Strategy"],
+  eyebrow: "Branding · Social Media · Websites · Digital Solutions",
+  cursorWords: ["Branding", "Social media", "Websites", "Digital tools", "Growth", "Branding", "Social media", "Websites"],
 };
 
 export const taglineSection = {
   line1: "Turn the Tide.",
   line2: "Move the Business",
   intro:
-    "We turn business challenges and digital shifts into momentum, using creativity and technology to move brands forward.",
-  primaryCta: "Start a Project",
-  secondaryCta: "See What We Do",
-  scrollCue: "Scroll to ride the wave",
+    "Nashwave is a digital growth partner for founders and business owners. We build your brand, run your social media, create your website and set up the digital tools that keep your business running smoothly.",
+  primaryCta: "Start a project",
+  secondaryCta: "See our services",
+  scrollCue: "Scroll to see what we do",
 };
 
 export const showreelSection = {
@@ -334,35 +433,86 @@ export const showreelSection = {
   comingSoonNote: "Replace this placeholder with the final 45–60 second production reel.",
 };
 
+/**
+ * The looping video shown right after "Turn the Tide" on the homepage (60 s brand film with sound).
+ * Files live in public/assets/video/. While both sources are empty the section is hidden.
+ * Keep each file under 25 MB (Cloudflare's per-file limit); ~10 MB loads well on phones.
+ * The MP4 (H.264 + AAC) plays in every current browser, so no WebM is needed for this one.
+ */
+export const featureVideo = {
+  webm: "",
+  // Videos are linked via /video/<file> (byte-range route for Safari), files live in public/assets/video/.
+  mp4: "/video/nashwave-intro.mp4",
+  poster: "/assets/video/nashwave-intro-poster.webp",
+  label: "Nashwave video",
+  playSound: "Play sound",
+  soundOff: "Sound off",
+  playVideo: "Play video",
+};
+
 export const aboutSection = {
-  label: "Meet Nashwave",
-  titleLine1: "When the market shifts,",
-  titleLine2: "we see a ",
-  titleEmphasis: "wave.",
+  label: "Who we are",
+  titleLine1: "Your digital",
+  titleLine2: "growth ",
+  titleEmphasis: "partner.",
   intro:
-    "Markets shift. We turn those shifts into sharper stories, stronger digital experiences and momentum that moves brands forward.",
-  approachLink: "Discover our approach",
+    "We turn your business into a brand people recognise and remember, with a clear look, a consistent voice and a personality your customers connect with. Then we give it what it needs to grow online: social media, a website, and digital tools that keep the business running smoothly.",
+  approachLink: "See how we work",
   imageAlt: "Layered white floor with a flowing wave texture",
-  povTag: "POV",
-  povLead: "Challenges are just currents.",
-  povAccent: "The right strategy turns them into movement.",
+  povTag: "Our goal",
+  povLead: "Your business deserves to be known.",
+  povAccent: "We make sure it is.",
 };
 
 export const servicesSection = {
-  label: "Our Services",
+  label: "What we do",
   // Shown as two lines.
-  title: ["Everything a brand", "needs to move."],
-  intro: "Six connected capabilities, built to work alone or as one integrated engine.",
-  allLink: "Explore all services",
+  title: ["Four services.", "One growth partner."],
+  intro: "Everything your business needs to look professional, get noticed online and run smoothly, from one team.",
+  allLink: "See all services",
+};
+
+export const audienceSection = {
+  label: "Who we work with",
+  // Shown as two lines.
+  title: ["Built for people", "building something."],
+  intro: "You don't need to be a big company to have a strong brand. If you run it, own it or are starting it, we can help.",
+  items: [
+    {
+      title: "Small industrialists and manufacturers",
+      copy: "Show buyers and dealers a professional face online, and replace paperwork with simple digital tools.",
+    },
+    {
+      title: "Shop and showroom owners",
+      copy: "Get found nearby, show your products on Instagram and your website, and turn walk-ins into regulars.",
+    },
+    {
+      title: "Women founders",
+      copy: "Build a brand that reflects you, and an online presence that keeps growing while you run everything else.",
+    },
+    {
+      title: "Coaches and motivational speakers",
+      copy: "Turn your voice into a recognisable personal brand, with content and a website that bring you more clients and stages.",
+    },
+    {
+      title: "Startup founders",
+      copy: "Launch with a clear brand, a website that converts and the systems to scale from day one.",
+    },
+    {
+      title: "Feeling stuck?",
+      copy: "Sales have flattened, or you don't know where to start online. We'll find your next opportunity and build it with you.",
+    },
+  ],
+  cta: "Talk to us about your business",
 };
 
 export const whyUsSection = {
-  label: "Why Us",
-  titleLead: "Creative that thinks like a business.",
-  titleAccent: "Technology that thinks like a creative.",
+  label: "Why Nashwave",
+  titleLead: "One team for your brand,",
+  titleAccent: "your socials, your website and your systems.",
   intro:
-    "We believe marketing should do more than look good. It should move something: an audience, a number, a decision.",
-  extension: "We work as an extension of your team: close, curious and accountable to results.",
+    "Most businesses juggle a designer, a social media freelancer, a web developer and an IT person. With us it is one team, one plan and one point of contact.",
+  extension: "You focus on running the business. We make sure it is seen, remembered and running smoothly online.",
 };
 
 export const approachSection = {
@@ -370,7 +520,7 @@ export const approachSection = {
   title: "Process",
   cornerTop: "How we work together",
   cornerBottom: "Step by step",
-  intro: "Five steps that turn a challenge into a campaign, and a campaign into growth.",
+  intro: "Five clear steps from the first conversation to a brand that keeps growing.",
   cta: "Start with a conversation",
 };
 
@@ -379,64 +529,69 @@ export const clientsSection = {
   title: "Brands that chose to move with us.",
 };
 
-export const caseStudiesSection = {
-  label: "Case Studies",
-  title: "Selected work.",
-  emptyTitle: "Case studies coming soon.",
-  emptyCopy: "Selected projects will be published here soon. In the meantime, let's talk about yours.",
-  emptyCta: "Start a project",
-  readMore: "Read case study →",
+export const productsPage = {
+  label: "Our Products",
+  // Shown as two lines.
+  title: ["Real work for", "real businesses."],
+  intro:
+    "Websites, web apps, social media pages and brands we have designed, built and run, grouped by service.",
+  jumpLabel: "Jump to",
+  visit: "Visit",
+  serviceLink: "About this service",
+  gallerySuffix: "brand guideline",
 };
 
 export const contactSection = {
   label: "Let's Talk",
-  titleLine1: "Start a project",
-  titleLine2: "with us.",
-  intro: "Tell us what you are facing and where you want to go. We will reply within one working day.",
+  titleLine1: "Tell us about",
+  titleLine2: "your business.",
+  intro:
+    "Share what you do and where you want to grow. We will reply within one working day with clear next steps.",
   sentTag: "Brief received",
   sentTitle: "Thanks. Your message has landed.",
   sentCopy: "We will be in touch within one working day.",
   fields: {
     name: "Name",
-    email: "Work email",
-    company: "Company",
+    email: "Email",
+    company: "Business name",
     service: "What do you need?",
     servicePlaceholder: "Select a service",
     serviceAddAnother: "Add another service",
     serviceRemove: "Remove",
     serviceSelectedLabel: "Selected services",
     serviceUnsure: "Not sure yet",
-    message: "Tell us about your project",
+    message: "What do you want to achieve?",
   },
   honeypot: "Don't fill this out:",
   submit: "Send my brief",
   sending: "Sending…",
   error: "Something went wrong. Please try again or email us at",
   asideTitle: "Get in touch",
-  cardLine: "Close, curious and accountable to results.",
+  cardLine: "Branding, social media, websites and digital solutions. One team.",
 };
 
 export const finalCtaSection = {
-  label: "One last thing",
-  titleLine1: "The tide is turning.",
-  titleLine2: "Be ready to move.",
-  intro: "Whether you are facing a challenge or chasing an opportunity, let's start the conversation.",
-  cta: "Start a Project",
+  label: "Ready to grow?",
+  titleLine1: "Let's make your business",
+  titleLine2: "a brand people remember.",
+  intro:
+    "Tell us where you are today. We will show you the next steps for your brand, your social media, your website and your business tools.",
+  cta: "Start a project",
   emailPrefix: "Or write to us at",
 };
 
 export const serviceDetail = {
-  includesLabel: "What's Included",
+  includesLabel: "What you get",
   includesTitle: "What's included.",
-  otherLabel: "Keep Exploring",
+  otherLabel: "More ways we help",
   otherTitle: "Other services.",
   ctaLabel: "Start a project",
 };
 
 export const notFoundPage = {
   label: "404",
-  title: "This page drifted off.",
-  copy: "The page you are looking for doesn't exist or has moved. Let's get you back on course.",
+  title: "This page doesn't exist.",
+  copy: "The link may be broken or the page may have moved. Try one of these instead.",
   links: [
     { name: "Back to home", href: routes.home },
     { name: "Our services", href: routes.services },
@@ -452,24 +607,25 @@ export const pageMeta = {
   about: {
     title: "About",
     description:
-      "Meet Nashwave: a media, marketing and digital team that turns business challenges and digital shifts into momentum.",
+      "Nashwave is a digital growth partner that turns businesses into recognisable brands, with branding, social media, websites and digital solutions from one team.",
     image: "/assets/nashwave-white-wave-floor.png",
   },
   services: {
     title: "Services",
-    description: "Six connected capabilities, built to work alone or as one integrated engine.",
+    description:
+      "Logo and branding, social media, website building and digital solutions for founders, shop owners, manufacturers and growing businesses.",
     image: "/assets/nashwave-ocean.jpg",
   },
-  work: {
-    title: "Work",
+  products: {
+    title: "Products",
     description:
-      "Strategy, content, campaigns and digital products, all in one flow. See the work move.",
-    image: "/assets/nashwave-workspace.jpg",
+      "Websites, web apps, social pages and brands designed, built and run by Nashwave, including Essar Sons Group and Glass Optimizer.",
+    image: "/assets/products/essarsons-desktop.webp",
   },
   contact: {
     title: "Contact",
     description:
-      "Tell us what you are facing and where you want to go. We will reply within one working day.",
+      "Tell us about your business and where you want to grow. We reply within one working day with clear next steps.",
     image: "/assets/nashwave-ocean.jpg",
   },
   privacy: {
@@ -516,7 +672,7 @@ export const privacyPage = {
     {
       heading: "Information we collect",
       body: [
-        "When you use our contact form we collect the details you provide: your name, work email, company, the services you are interested in and your message.",
+        "When you use our contact form we collect the details you provide: your name, email, business name, the services you are interested in and your message.",
         "Our hosting provider may also record standard technical information such as IP address, browser type and the pages you visit.",
       ],
     },

@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page(routes.about, 0.8),
     page(routes.services, 0.9),
     ...services.map((s) => page(routes.service(s.slug), 0.8)),
-    page(routes.work, 0.7),
+    page(routes.products, 0.8),
     page(routes.contact, 0.8),
     page(routes.privacy, 0.2),
     page(routes.terms, 0.2),

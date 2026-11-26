@@ -16,8 +16,8 @@ export default function Reveal({
 }: {
   as?: "div" | "span" | "p" | "li";
   delay?: number;
-  /** "up": fade + rise. "line": the text slides up from behind a mask (for heading lines). */
-  variant?: "up" | "line";
+  /** "up": fade + rise. "line": text slides up from behind a mask (heading lines). "pop": subtle rise + scale-up (media). */
+  variant?: "up" | "line" | "pop";
   className?: string;
   children: React.ReactNode;
 }) {

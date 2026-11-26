@@ -23,14 +23,16 @@ export default function Hero() {
         cursor.style.top = `${event.clientY - bounds.top}px`;
       }}
     >
-      <Image
-        src="/assets/nashwave-ocean.jpg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-50"
-      />
+      <div data-parallax="0.25" className="parallax-layer">
+        <Image
+          src="/assets/nashwave-ocean.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-50"
+        />
+      </div>
       <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(3,17,27,.96)_8%,rgba(5,42,52,.72)_56%,rgba(32,0,42,.6))]" />
       <div className="digital-grid absolute inset-0 opacity-25" />
       <p className="absolute left-5 top-28 text-[10px] font-bold uppercase tracking-[0.28em] text-white/50 md:left-10 lg:left-16">
